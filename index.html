@@ -287,27 +287,45 @@ async function loadRivers() {
     "Tillamook River","Yamhill River","Tualatin River","Santiam River",
     "Molalla River","Calapooia River","Long Tom River"
   ]);
-  const nameFilters = riverNames.map(n => `way["waterway"="river"]["name"="${n}"](41.9,-124.7,46.3,-116.4);`).join('');
-  const query = '[out:json][timeout:90];(' + nameFilters + ');out geom;';
+  const bbox = "41.9,-124.7,46.3,-116.4";
 
-  console.log('Query:', query.substring(0, 200));
+  // Split into batches of 5 to avoid Overpass timeout
+  const batchSize = 5;
+  const batches = [];
+  for (let i = 0; i < riverNames.length; i += batchSize) {
+    batches.push(riverNames.slice(i, i + batchSize));
+  }
+
   setStatus('Loading accurate river data from OpenStreetMap…');
-  try {
-    console.log('Fetching from Overpass API…');
-    const res = await fetch('https://overpass-api.de/api/interpreter', {
-      method:'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: 'data=' + encodeURIComponent(query)
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const text = await res.text();
-    console.log('Raw Overpass response (first 500 chars):', text.substring(0, 500));
-    const json = JSON.parse(text);
-    console.log(`Overpass returned ${json.elements.length} elements`);
-    if (json.elements.length === 0) throw new Error('No elements returned');
-    drawFromOSM(json.elements);
-  } catch(err) {
-    console.warn('Overpass failed, using baked coords:', err.message);
+  let allElements = [];
+  let anySuccess = false;
+
+  for (let i = 0; i < batches.length; i++) {
+    const batch = batches[i];
+    setStatus(`Loading rivers… (${i+1}/${batches.length})`);
+    const filters = batch.map(n => `way["waterway"="river"]["name"="${n}"](${bbox});`).join('');
+    const query = '[out:json][timeout:30];(' + filters + ');out geom;';
+    try {
+      const res = await fetch('https://overpass-api.de/api/interpreter', {
+        method:'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'data=' + encodeURIComponent(query)
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      console.log(`Batch ${i+1}: ${json.elements.length} elements`);
+      allElements = allElements.concat(json.elements);
+      anySuccess = true;
+    } catch(err) {
+      console.warn(`Batch ${i+1} failed:`, err.message);
+    }
+  }
+
+  if (anySuccess && allElements.length > 0) {
+    console.log(`Total OSM elements: ${allElements.length}`);
+    drawFromOSM(allElements);
+  } else {
+    console.warn('All batches failed, using baked coords');
     drawFromBaked();
   }
 
