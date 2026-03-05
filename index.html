@@ -242,29 +242,73 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 let activeLayer = null;
 
-function loadRivers() {
-  // River geometry baked in — no API call needed
-  const loading = document.getElementById('loading');
-  Object.entries(RIVER_GEOMETRY).forEach(([name, river]) => {
-    const data = RIVER_DATA[name];
-    const color = data ? STATUS_COLORS[data.status] : DEFAULT_COLOR;
-    river.segments.forEach(coords => {
-      if (coords.length < 2) return;
-      L.polyline(coords, { color, weight:10, opacity:.12, lineJoin:'round' }).addTo(map);
-      const poly = L.polyline(coords, { color, weight:3.5, opacity:.9, lineJoin:'round', lineCap:'round' }).addTo(map);
-      poly.bindTooltip(name, { className:'river-tooltip', sticky:true, offset:[10,0] });
-      poly.on('mouseover', () => { if(poly!==activeLayer) poly.setStyle({weight:6,opacity:1}); });
-      poly.on('mouseout',  () => { if(poly!==activeLayer) poly.setStyle({weight:3.5,opacity:.9}); });
-      poly.on('click', () => {
-        if(activeLayer && activeLayer!==poly) activeLayer.setStyle({weight:3.5,opacity:.9});
-        activeLayer = poly;
-        poly.setStyle({weight:7,opacity:1});
-        if(data) showPanel(name, data);
-      });
+function drawSegments(name, segments) {
+  const data = RIVER_DATA[name];
+  const color = data ? STATUS_COLORS[data.status] : DEFAULT_COLOR;
+  segments.forEach(coords => {
+    if (coords.length < 2) return;
+    L.polyline(coords, { color, weight:10, opacity:.12, lineJoin:'round' }).addTo(map);
+    const poly = L.polyline(coords, { color, weight:3.5, opacity:.9, lineJoin:'round', lineCap:'round' }).addTo(map);
+    poly.bindTooltip(name, { className:'river-tooltip', sticky:true, offset:[10,0] });
+    poly.on('mouseover', () => { if(poly!==activeLayer) poly.setStyle({weight:6,opacity:1}); });
+    poly.on('mouseout',  () => { if(poly!==activeLayer) poly.setStyle({weight:3.5,opacity:.9}); });
+    poly.on('click', () => {
+      if(activeLayer && activeLayer!==poly) activeLayer.setStyle({weight:3.5,opacity:.9});
+      activeLayer = poly;
+      poly.setStyle({weight:7,opacity:1});
+      if(data) showPanel(name, data);
     });
   });
+}
+
+function drawFromBaked() {
+  console.log('Using baked coordinates (fallback)');
+  Object.entries(RIVER_GEOMETRY).forEach(([name, river]) => drawSegments(name, river.segments));
+}
+
+function drawFromOSM(elements) {
+  const byName = {};
+  elements.forEach(el => {
+    if (!el.geometry || !el.tags?.name) return;
+    const name = el.tags.name;
+    if (!byName[name]) byName[name] = [];
+    byName[name].push(el.geometry.map(p => [p.lat, p.lon]));
+  });
+  console.log(`Drew ${elements.length} OSM segments for rivers:`, Object.keys(byName));
+  Object.entries(byName).forEach(([name, segments]) => drawSegments(name, segments));
+}
+
+async function loadRivers() {
+  const loading = document.getElementById('loading');
+  const setStatus = t => document.getElementById('load-status').textContent = t;
+
+  const riverNames = Object.keys(RIVER_DATA).concat([
+    "Columbia River","Snake River","Siuslaw River","Alsea River",
+    "Tillamook River","Yamhill River","Tualatin River","Santiam River",
+    "Molalla River","Calapooia River","Long Tom River"
+  ]);
+  const bbox = "41.9,-124.7,46.3,-116.4";
+  const nameUnion = riverNames.map(n => `way["waterway"~"river|stream"]["name"="${n}"](${bbox});`).join('\n');
+  const query = `[out:json][timeout:60];\n(\n${nameUnion}\n);\nout geom;`;
+
+  setStatus('Loading accurate river data from OpenStreetMap…');
+  try {
+    console.log('Fetching from Overpass API…');
+    const res = await fetch('https://overpass-api.de/api/interpreter', {
+      method:'POST', body:'data='+encodeURIComponent(query)
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = await res.json();
+    console.log(`Overpass returned ${json.elements.length} elements`);
+    if (json.elements.length === 0) throw new Error('No elements returned');
+    drawFromOSM(json.elements);
+  } catch(err) {
+    console.warn('Overpass failed, using baked coords:', err.message);
+    drawFromBaked();
+  }
+
   loading.classList.add('done');
-  setTimeout(() => loading.style.display='none', 300);
+  setTimeout(() => loading.style.display='none', 400);
   document.getElementById('map-hint').classList.remove('hidden');
 }
 
