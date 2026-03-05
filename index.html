@@ -10,193 +10,182 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --teal:   #00C2A8;
-      --sky:    #5DD4F0;
-      --green:  #3DDC84;
-      --orange: #FF7B2E;
-      --yellow: #FFD93D;
-      --red:    #FF4D6D;
-      --dark:   #0A1628;
-      --panel:  #0f1e36;
-      --light:  #E8F6FF;
+      --cerulean: #2A9FD6;
+      --sky:      #6EC6E6;
+      --black:    #000000;
+      --black-2:  #0d0d0d;
+      --black-3:  #111111;
+      --black-4:  #181818;
+      --black-5:  #1f1f1f;
+      --text:     #cce8f4;
+      --text-dim: rgba(180,220,240,.5);
+      --border:   rgba(42,159,214,.18);
+      --green:    #3DDC84;
+      --yellow:   #FFD93D;
+      --red:      #FF4D6D;
+      --orange:   #FF7B2E;
     }
-    html, body { height: 100%; font-family: 'Nunito', sans-serif; background: var(--dark); color: var(--light); overflow: hidden; }
+    html, body { height:100%; font-family:'Nunito',sans-serif; background:var(--black); color:var(--text); overflow:hidden; }
 
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 40px; height: 56px;
-      background: rgba(10,22,40,.95);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(93,212,240,.13);
+      position:fixed; top:0; left:0; right:0; z-index:1000;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 36px; height:58px;
+      background:var(--black);
+      border-bottom:1px solid var(--border);
+      box-shadow:0 1px 24px rgba(0,0,0,.9);
     }
-    .logo { font-family: 'Righteous', cursive; font-size: 1.4rem; color: var(--sky); }
-    .logo span { color: var(--green); }
-    .nav-right { display: flex; align-items: center; gap: 20px; font-size: .88rem; font-weight: 700; color: rgba(232,246,255,.5); }
-    .live-dot { display: flex; align-items: center; gap: 6px; color: var(--green); }
-    .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); animation: pulse 1.8s ease-in-out infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+    .nav-logo { display:flex; align-items:center; gap:11px; text-decoration:none; }
+    .nav-logo img { height:36px; width:auto; object-fit:contain; display:block; }
+    .nav-logo-text { font-family:'Righteous',cursive; font-size:1.25rem; color:var(--cerulean); letter-spacing:.5px; }
+    .nav-logo-text span { color:var(--sky); }
+    .nav-right { display:flex; align-items:center; gap:20px; font-size:.85rem; font-weight:700; color:var(--text-dim); }
+    .live-dot { display:flex; align-items:center; gap:7px; color:var(--cerulean); }
+    .pulse { width:8px; height:8px; border-radius:50%; background:var(--cerulean); box-shadow:0 0 8px var(--cerulean); animation:pulse 1.8s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.5)} }
+    .nav-divider { width:1px; height:20px; background:var(--border); }
+    .nav-tag { padding:5px 13px; border-radius:20px; border:1px solid var(--border); background:rgba(42,159,214,.07); color:var(--sky); font-size:.78rem; font-weight:800; }
 
-    .app { position: fixed; top: 56px; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; }
-    #map-wrap { position: relative; flex: 1 1 auto; min-height: 0; }
-    #map { width: 100%; height: 100%; }
+    .app { position:fixed; top:58px; left:0; right:0; bottom:0; display:flex; flex-direction:column; }
+    #map-wrap { position:relative; flex:1 1 auto; min-height:0; }
+    #map { width:100%; height:100%; }
 
-    /* Dark map tiles */
-    .leaflet-tile { filter: brightness(.45) saturate(.4) hue-rotate(195deg); }
-    .leaflet-container { background: #0a1422 !important; }
-    .leaflet-control-zoom a { background: var(--panel) !important; color: var(--sky) !important; border-color: rgba(93,212,240,.2) !important; font-weight: 700; }
-    .leaflet-control-attribution { background: rgba(10,22,40,.7) !important; color: rgba(232,246,255,.25) !important; font-size: .65rem; }
-    .leaflet-control-attribution a { color: rgba(232,246,255,.35) !important; }
+    .leaflet-container { background:#020202 !important; }
+    .leaflet-tile { filter:brightness(.32) saturate(.25) hue-rotate(185deg) contrast(1.1); }
+    .leaflet-control-zoom { border:1px solid var(--border) !important; border-radius:8px !important; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,.7) !important; }
+    .leaflet-control-zoom a { background:var(--black-3) !important; color:var(--cerulean) !important; border-color:var(--border) !important; font-weight:800; }
+    .leaflet-control-zoom a:hover { background:var(--black-5) !important; color:var(--sky) !important; }
+    .leaflet-control-attribution { background:rgba(0,0,0,.75) !important; color:rgba(180,220,240,.2) !important; font-size:.6rem; }
+    .leaflet-control-attribution a { color:rgba(180,220,240,.3) !important; }
 
     .river-tooltip {
-      background: rgba(10,22,40,.92) !important;
-      border: 1px solid rgba(93,212,240,.3) !important;
-      color: var(--light) !important;
-      font-family: 'Nunito', sans-serif !important;
-      font-weight: 700 !important; font-size: .82rem !important;
-      border-radius: 8px !important; padding: 5px 10px !important;
-      box-shadow: 0 4px 20px rgba(0,0,0,.5) !important;
-      white-space: nowrap !important;
+      background:rgba(0,0,0,.96) !important;
+      border:1px solid var(--cerulean) !important;
+      color:var(--sky) !important;
+      font-family:'Nunito',sans-serif !important;
+      font-weight:800 !important; font-size:.82rem !important;
+      border-radius:7px !important; padding:5px 11px !important;
+      box-shadow:0 4px 20px rgba(0,0,0,.8) !important;
+      white-space:nowrap !important;
     }
 
-    /* Loading overlay */
     #loading {
-      position: absolute; inset: 0; z-index: 800;
-      background: rgba(10,22,40,.88);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 16px; backdrop-filter: blur(4px);
-      transition: opacity .5s;
+      position:absolute; inset:0; z-index:800;
+      background:rgba(0,0,0,.93);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:16px; backdrop-filter:blur(4px); transition:opacity .5s;
     }
-    #loading.done { opacity: 0; pointer-events: none; }
-    .spinner {
-      width: 44px; height: 44px; border-radius: 50%;
-      border: 3px solid rgba(93,212,240,.15);
-      border-top-color: var(--sky);
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    #loading p { font-family: 'Righteous', cursive; font-size: 1rem; color: var(--sky); letter-spacing: 1px; }
-    #load-status { font-size: .8rem; color: rgba(232,246,255,.45); font-weight: 600; }
+    #loading.done { opacity:0; pointer-events:none; }
+    .spinner { width:44px; height:44px; border-radius:50%; border:3px solid rgba(42,159,214,.12); border-top-color:var(--cerulean); animation:spin 1s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    #loading p { font-family:'Righteous',cursive; font-size:1rem; color:var(--cerulean); letter-spacing:1px; }
+    #load-status { font-size:.78rem; color:var(--text-dim); font-weight:600; }
 
-    /* Hint */
     #map-hint {
-      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-      z-index: 700;
-      background: rgba(10,22,40,.88); border: 1px solid rgba(93,212,240,.2);
-      border-radius: 50px; padding: 10px 22px;
-      font-size: .88rem; font-weight: 700; color: rgba(232,246,255,.75);
-      pointer-events: none; backdrop-filter: blur(8px);
-      transition: opacity .4s; white-space: nowrap;
+      position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
+      z-index:700;
+      background:rgba(0,0,0,.9); border:1px solid var(--border);
+      border-radius:50px; padding:10px 22px;
+      font-size:.86rem; font-weight:700; color:var(--sky);
+      pointer-events:none; backdrop-filter:blur(8px);
+      transition:opacity .4s; white-space:nowrap;
+      box-shadow:0 4px 24px rgba(0,0,0,.6);
     }
-    #map-hint.hidden { opacity: 0; }
+    #map-hint.hidden { opacity:0; }
 
-    /* Legend */
     .map-legend {
-      position: absolute; top: 14px; right: 14px; z-index: 700;
-      background: rgba(10,22,40,.9); border: 1px solid rgba(93,212,240,.15);
-      border-radius: 14px; padding: 14px 16px;
-      font-size: .78rem; font-weight: 700; backdrop-filter: blur(8px);
+      position:absolute; top:14px; right:14px; z-index:700;
+      background:rgba(0,0,0,.92); border:1px solid var(--border);
+      border-radius:12px; padding:14px 16px;
+      font-size:.76rem; font-weight:700; backdrop-filter:blur(10px);
+      box-shadow:0 4px 24px rgba(0,0,0,.7);
     }
-    .map-legend h4 { font-family: 'Righteous', cursive; font-size: .8rem; color: var(--sky); margin-bottom: 10px; }
-    .leg { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; color: rgba(232,246,255,.8); }
-    .leg:last-child { margin-bottom: 0; }
-    .leg-line { width: 24px; height: 3px; border-radius: 2px; }
+    .map-legend h4 { font-family:'Righteous',cursive; font-size:.78rem; color:var(--cerulean); margin-bottom:10px; letter-spacing:1px; text-transform:uppercase; }
+    .leg { display:flex; align-items:center; gap:8px; margin-bottom:6px; color:var(--text-dim); }
+    .leg:last-child { margin-bottom:0; }
+    .leg-line { width:22px; height:3px; border-radius:2px; }
 
-    /* Error banner */
     #error-banner {
-      display: none;
-      position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
-      z-index: 700;
-      background: rgba(255,77,109,.15); border: 1px solid rgba(255,77,109,.4);
-      border-radius: 10px; padding: 10px 18px;
-      font-size: .82rem; font-weight: 700; color: #FF4D6D;
-      backdrop-filter: blur(8px); white-space: nowrap;
+      display:none; position:absolute; top:14px; left:50%; transform:translateX(-50%);
+      z-index:700; background:rgba(0,0,0,.9); border:1px solid rgba(255,77,109,.4);
+      border-radius:10px; padding:10px 18px;
+      font-size:.82rem; font-weight:700; color:#FF4D6D;
+      backdrop-filter:blur(8px); white-space:nowrap;
     }
 
-    /* Data panel */
     #data-panel {
-      flex: 0 0 auto; background: var(--panel);
-      border-top: 2px solid rgba(93,212,240,.15);
-      overflow: hidden; max-height: 0; opacity: 0;
-      transition: max-height .4s cubic-bezier(.4,0,.2,1), opacity .3s;
+      flex:0 0 auto; background:var(--black-2);
+      border-top:1px solid var(--border);
+      box-shadow:0 -4px 32px rgba(0,0,0,.8);
+      overflow:hidden; max-height:0; opacity:0;
+      transition:max-height .4s cubic-bezier(.4,0,.2,1), opacity .3s;
     }
-    #data-panel.open { max-height: 260px; opacity: 1; }
+    #data-panel.open { max-height:260px; opacity:1; }
+    #data-panel::before { content:''; display:block; height:2px; background:linear-gradient(90deg, var(--cerulean), var(--sky), transparent); }
 
-    .panel-inner {
-      padding: 18px 36px 22px;
-      display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap;
-    }
-    .panel-title-row {
-      flex: 0 0 100%;
-      display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;
-    }
-    .panel-title-left { display: flex; align-items: baseline; gap: 10px; }
-    .panel-river-name { font-family: 'Righteous', cursive; font-size: 1.45rem; color: #fff; }
-    .panel-region { font-size: .78rem; color: var(--sky); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: .85; }
-    .close-btn { background: none; border: none; cursor: pointer; color: rgba(232,246,255,.35); font-size: 1.3rem; transition: color .2s; padding: 4px; }
-    .close-btn:hover { color: var(--light); }
+    .panel-inner { padding:18px 36px 22px; display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap; }
+    .panel-title-row { flex:0 0 100%; display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+    .panel-title-left { display:flex; align-items:baseline; gap:12px; }
+    .panel-river-name { font-family:'Righteous',cursive; font-size:1.5rem; color:var(--sky); }
+    .panel-region { font-size:.75rem; color:var(--cerulean); font-weight:700; letter-spacing:1px; text-transform:uppercase; opacity:.8; }
+    .close-btn { background:none; border:1px solid var(--border); border-radius:6px; cursor:pointer; color:var(--text-dim); font-size:1rem; padding:3px 9px; transition:color .2s, border-color .2s, background .2s; }
+    .close-btn:hover { color:var(--sky); border-color:var(--cerulean); background:rgba(42,159,214,.08); }
 
-    .stat-cards { display: flex; gap: 12px; flex-wrap: wrap; }
-    .stat-card {
-      background: rgba(255,255,255,.05); border: 1px solid rgba(93,212,240,.12);
-      border-radius: 14px; padding: 12px 18px; min-width: 110px;
-      transition: border-color .2s, transform .2s; cursor: default;
-    }
-    .stat-card:hover { border-color: rgba(93,212,240,.3); transform: translateY(-2px); }
-    .stat-icon { font-size: 1.2rem; margin-bottom: 3px; }
-    .stat-label { font-size: .7rem; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: rgba(232,246,255,.4); margin-bottom: 2px; }
-    .stat-value { font-family: 'Righteous', cursive; font-size: 1.15rem; color: #fff; }
-    .stat-unit { font-size: .7rem; color: rgba(232,246,255,.5); font-family: 'Nunito', sans-serif; font-weight: 600; }
+    .stat-cards { display:flex; gap:11px; flex-wrap:wrap; }
+    .stat-card { background:var(--black-4); border:1px solid var(--border); border-radius:12px; padding:12px 17px; min-width:108px; transition:border-color .2s, transform .2s, box-shadow .2s; cursor:default; }
+    .stat-card:hover { border-color:var(--cerulean); transform:translateY(-2px); box-shadow:0 4px 18px rgba(42,159,214,.12); }
+    .stat-icon { font-size:1.15rem; margin-bottom:4px; }
+    .stat-label { font-size:.68rem; font-weight:700; letter-spacing:.8px; text-transform:uppercase; color:var(--text-dim); margin-bottom:3px; }
+    .stat-value { font-family:'Righteous',cursive; font-size:1.12rem; color:var(--sky); }
+    .stat-unit { font-size:.68rem; color:var(--text-dim); font-family:'Nunito',sans-serif; font-weight:600; }
 
-    .panel-right { display: flex; flex-direction: column; gap: 10px; }
-    .status-big {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 9px 18px; border-radius: 50px; font-weight: 800; font-size: .95rem;
-    }
-    .status-big.good    { background: rgba(61,220,132,.15); color: var(--green);  border: 1.5px solid rgba(61,220,132,.35); }
-    .status-big.caution { background: rgba(255,217,61,.15);  color: var(--yellow); border: 1.5px solid rgba(255,217,61,.35); }
-    .status-big.high    { background: rgba(255,77,109,.15);  color: var(--red);    border: 1.5px solid rgba(255,77,109,.35); }
-    .status-big.low     { background: rgba(255,123,46,.15);  color: var(--orange); border: 1.5px solid rgba(255,123,46,.35); }
-    .sdot { width: 8px; height: 8px; border-radius: 50%; }
-    .sdot.good    { background: var(--green);  box-shadow: 0 0 6px var(--green); }
-    .sdot.caution { background: var(--yellow); box-shadow: 0 0 6px var(--yellow); }
-    .sdot.high    { background: var(--red);    box-shadow: 0 0 6px var(--red); }
-    .sdot.low     { background: var(--orange); box-shadow: 0 0 6px var(--orange); }
-    .panel-note { font-size: .8rem; color: rgba(232,246,255,.45); max-width: 260px; line-height: 1.55; }
+    .panel-right { display:flex; flex-direction:column; gap:10px; }
+    .status-big { display:inline-flex; align-items:center; gap:8px; padding:9px 18px; border-radius:50px; font-weight:800; font-size:.9rem; }
+    .status-big.good    { background:rgba(61,220,132,.1);  color:var(--green);  border:1px solid rgba(61,220,132,.3); }
+    .status-big.caution { background:rgba(255,217,61,.1);  color:var(--yellow); border:1px solid rgba(255,217,61,.3); }
+    .status-big.high    { background:rgba(255,77,109,.1);  color:var(--red);    border:1px solid rgba(255,77,109,.3); }
+    .status-big.low     { background:rgba(255,123,46,.1);  color:var(--orange); border:1px solid rgba(255,123,46,.3); }
+    .sdot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+    .sdot.good    { background:var(--green);  box-shadow:0 0 5px var(--green); }
+    .sdot.caution { background:var(--yellow); box-shadow:0 0 5px var(--yellow); }
+    .sdot.high    { background:var(--red);    box-shadow:0 0 5px var(--red); }
+    .sdot.low     { background:var(--orange); box-shadow:0 0 5px var(--orange); }
+    .panel-note { font-size:.79rem; color:var(--text-dim); max-width:260px; line-height:1.6; }
 
     @media (max-width:600px) {
-      nav { padding: 12px 18px; }
-      .panel-inner { padding: 14px 16px; gap: 14px; }
-      .stat-card { min-width: 95px; padding: 10px 13px; }
+      nav { padding:0 16px; }
+      .nav-logo-text { font-size:1rem; }
+      .panel-inner { padding:14px 16px; gap:12px; }
+      .stat-card { min-width:92px; padding:10px 12px; }
     }
   </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo">River<span>Read</span> PNW</div>
+  <a class="nav-logo" href="#">
+    <img src="logo.png" alt="RiverRead PNW" onerror="this.style.display='none'"/>
+    <div class="nav-logo-text">River<span>Read</span> PNW</div>
+  </a>
   <div class="nav-right">
     <div class="live-dot"><div class="pulse"></div> Live Data</div>
-    <span>Oregon</span>
+    <div class="nav-divider"></div>
+    <div class="nav-tag">Oregon</div>
   </div>
 </nav>
 
 <div class="app">
   <div id="map-wrap">
     <div id="map"></div>
-
-    <!-- Loading overlay -->
     <div id="loading">
       <div class="spinner"></div>
       <p>Loading River Data…</p>
       <span id="load-status">Fetching real river geometry from OpenStreetMap</span>
     </div>
-
     <div id="map-hint" class="hidden">🎣 Click any river to see current conditions</div>
     <div id="error-banner">⚠️ Could not load river data — check your connection and refresh</div>
-
     <div class="map-legend">
-      <h4>CONDITIONS</h4>
+      <h4>Conditions</h4>
       <div class="leg"><div class="leg-line" style="background:#3DDC84"></div> Prime Fishing</div>
       <div class="leg"><div class="leg-line" style="background:#FFD93D"></div> Use Caution</div>
       <div class="leg"><div class="leg-line" style="background:#FF4D6D"></div> Running High</div>
@@ -209,7 +198,7 @@
       <div class="panel-title-row">
         <div class="panel-title-left">
           <span class="panel-river-name" id="panel-name"></span>
-          <span class="panel-region"     id="panel-region"></span>
+          <span class="panel-region" id="panel-region"></span>
         </div>
         <button class="close-btn" onclick="closePanel()">✕</button>
       </div>
@@ -223,98 +212,64 @@
 </div>
 
 <script>
-// ── PLACEHOLDER DATA (swap flow/level/temp for real USGS values later) ──────
 const RIVER_DATA = {
-  "Willamette River":  { region:"Northwest Oregon",  status:"good",    statusLabel:"Prime Fishing", flow:"4,820", level:"5.2", clarity:"Clear",          clarityUnit:"3–4 ft vis", temp:"52", note:"Great steelhead conditions. Flows slightly above average for the season." },
-  "Deschutes River":   { region:"Central Oregon",    status:"caution", statusLabel:"Use Caution",   flow:"3,100", level:"4.8", clarity:"Slightly Turbid", clarityUnit:"1–2 ft vis", temp:"48", note:"Recent rainfall elevated flows. Murky near Maupin. Watch your footing." },
-  "Sandy River":       { region:"NW Oregon / Mt. Hood", status:"high", statusLabel:"Running High",  flow:"9,400", level:"8.6", clarity:"Turbid",          clarityUnit:"<0.5 ft vis",temp:"44", note:"Heavy snowmelt from Mt. Hood. Not recommended for wading." },
-  "Clackamas River":   { region:"NW Oregon",         status:"good",    statusLabel:"Prime Fishing", flow:"2,650", level:"4.1", clarity:"Clear",          clarityUnit:"4+ ft vis",  temp:"50", note:"Excellent conditions near Estacada. Chinook active in lower reaches." },
-  "Rogue River":       { region:"Southern Oregon",   status:"good",    statusLabel:"Prime Fishing", flow:"3,800", level:"4.5", clarity:"Clear",          clarityUnit:"3–5 ft vis", temp:"55", note:"World-class steelhead fishing. Gold Beach section particularly productive." },
-  "Umpqua River":      { region:"Southern Oregon",   status:"caution", statusLabel:"Use Caution",   flow:"5,200", level:"6.1", clarity:"Slightly Turbid",clarityUnit:"1.5 ft vis", temp:"53", note:"North Umpqua clearing. South fork still elevated after weekend rain." },
-  "John Day River":    { region:"Eastern Oregon",    status:"low",     statusLabel:"Running Low",   flow:"820",   level:"2.1", clarity:"Clear",          clarityUnit:"5+ ft vis",  temp:"58", note:"Unusually low for the season. Warm-water species only. Check regs." },
-  "McKenzie River":    { region:"Central Oregon",    status:"good",    statusLabel:"Prime Fishing", flow:"1,950", level:"3.8", clarity:"Crystal Clear",  clarityUnit:"5+ ft vis",  temp:"46", note:"Spring Chinook beginning their run. Legendary clarity." },
-  "Owyhee River":      { region:"Eastern Oregon",    status:"low",     statusLabel:"Running Low",   flow:"340",   level:"1.6", clarity:"Clear",          clarityUnit:"4+ ft vis",  temp:"62", note:"Low reservoir releases. Canyon section great for dry-fly trout." },
-  "Illinois River":    { region:"SW Oregon",         status:"good",    statusLabel:"Prime Fishing", flow:"1,200", level:"3.2", clarity:"Clear",          clarityUnit:"3 ft vis",   temp:"57", note:"Remote wild steelhead river. Walk-in access only for most reaches." },
-  "Nehalem River":     { region:"NW Oregon Coast",   status:"caution", statusLabel:"Use Caution",   flow:"2,800", level:"5.5", clarity:"Slightly Turbid",clarityUnit:"1–2 ft vis", temp:"49", note:"Winter steelhead present. Flows fluctuating with coastal weather." },
-  "Siletz River":      { region:"Oregon Coast",      status:"good",    statusLabel:"Prime Fishing", flow:"1,600", level:"3.9", clarity:"Clear",          clarityUnit:"2–3 ft vis", temp:"51", note:"Good winter steelhead run underway. Access at Siletz Gorge recommended." },
-  "Coquille River":    { region:"Southern Coast",    status:"good",    statusLabel:"Prime Fishing", flow:"2,100", level:"4.2", clarity:"Clear",          clarityUnit:"2–4 ft vis", temp:"54", note:"Excellent cutthroat trout fishing in upper forks." },
-  "Powder River":      { region:"Eastern Oregon",    status:"low",     statusLabel:"Running Low",   flow:"290",   level:"1.4", clarity:"Clear",          clarityUnit:"4+ ft vis",  temp:"60", note:"Low flows typical for season. Reservoir drawdown affecting levels." },
-  "Malheur River":     { region:"Eastern Oregon",    status:"low",     statusLabel:"Running Low",   flow:"410",   level:"1.8", clarity:"Clear",          clarityUnit:"3+ ft vis",  temp:"59", note:"Dry year impacting flows. Best fishing near headwaters." },
+  "Willamette River":  { region:"Northwest Oregon",     status:"good",    statusLabel:"Prime Fishing", flow:"4,820", level:"5.2", clarity:"Clear",          clarityUnit:"3–4 ft vis", temp:"52", note:"Great steelhead conditions. Flows slightly above average for the season." },
+  "Deschutes River":   { region:"Central Oregon",       status:"caution", statusLabel:"Use Caution",   flow:"3,100", level:"4.8", clarity:"Slightly Turbid", clarityUnit:"1–2 ft vis", temp:"48", note:"Recent rainfall elevated flows. Murky near Maupin. Watch your footing." },
+  "Sandy River":       { region:"NW Oregon / Mt. Hood", status:"high",    statusLabel:"Running High",  flow:"9,400", level:"8.6", clarity:"Turbid",          clarityUnit:"<0.5 ft vis",temp:"44", note:"Heavy snowmelt from Mt. Hood. Not recommended for wading." },
+  "Clackamas River":   { region:"NW Oregon",            status:"good",    statusLabel:"Prime Fishing", flow:"2,650", level:"4.1", clarity:"Clear",          clarityUnit:"4+ ft vis",  temp:"50", note:"Excellent conditions near Estacada. Chinook active in lower reaches." },
+  "Rogue River":       { region:"Southern Oregon",      status:"good",    statusLabel:"Prime Fishing", flow:"3,800", level:"4.5", clarity:"Clear",          clarityUnit:"3–5 ft vis", temp:"55", note:"World-class steelhead fishing. Gold Beach section particularly productive." },
+  "Umpqua River":      { region:"Southern Oregon",      status:"caution", statusLabel:"Use Caution",   flow:"5,200", level:"6.1", clarity:"Slightly Turbid",clarityUnit:"1.5 ft vis", temp:"53", note:"North Umpqua clearing. South fork still elevated after weekend rain." },
+  "John Day River":    { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   flow:"820",   level:"2.1", clarity:"Clear",          clarityUnit:"5+ ft vis",  temp:"58", note:"Unusually low for the season. Warm-water species only. Check regs." },
+  "McKenzie River":    { region:"Central Oregon",       status:"good",    statusLabel:"Prime Fishing", flow:"1,950", level:"3.8", clarity:"Crystal Clear",  clarityUnit:"5+ ft vis",  temp:"46", note:"Spring Chinook beginning their run. Legendary clarity." },
+  "Owyhee River":      { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   flow:"340",   level:"1.6", clarity:"Clear",          clarityUnit:"4+ ft vis",  temp:"62", note:"Low reservoir releases. Canyon section great for dry-fly trout." },
+  "Illinois River":    { region:"SW Oregon",            status:"good",    statusLabel:"Prime Fishing", flow:"1,200", level:"3.2", clarity:"Clear",          clarityUnit:"3 ft vis",   temp:"57", note:"Remote wild steelhead river. Walk-in access only for most reaches." },
+  "Nehalem River":     { region:"NW Oregon Coast",      status:"caution", statusLabel:"Use Caution",   flow:"2,800", level:"5.5", clarity:"Slightly Turbid",clarityUnit:"1–2 ft vis", temp:"49", note:"Winter steelhead present. Flows fluctuating with coastal weather." },
+  "Siletz River":      { region:"Oregon Coast",         status:"good",    statusLabel:"Prime Fishing", flow:"1,600", level:"3.9", clarity:"Clear",          clarityUnit:"2–3 ft vis", temp:"51", note:"Good winter steelhead run underway. Access at Siletz Gorge recommended." },
+  "Coquille River":    { region:"Southern Coast",       status:"good",    statusLabel:"Prime Fishing", flow:"2,100", level:"4.2", clarity:"Clear",          clarityUnit:"2–4 ft vis", temp:"54", note:"Excellent cutthroat trout fishing in upper forks." },
+  "Powder River":      { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   flow:"290",   level:"1.4", clarity:"Clear",          clarityUnit:"4+ ft vis",  temp:"60", note:"Low flows typical for season. Reservoir drawdown affecting levels." },
+  "Malheur River":     { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   flow:"410",   level:"1.8", clarity:"Clear",          clarityUnit:"3+ ft vis",  temp:"59", note:"Dry year impacting flows. Best fishing near headwaters." },
 };
 
 const STATUS_COLORS = { good:'#3DDC84', caution:'#FFD93D', high:'#FF4D6D', low:'#FF7B2E' };
-const DEFAULT_COLOR = '#5DD4F0'; // for rivers not in our dataset
+const DEFAULT_COLOR = '#2A9FD6';
 
-// ── MAP SETUP ────────────────────────────────────────────────────────────────
-const map = L.map('map', { center:[44.0,-120.5], zoom:7, zoomControl:true });
+const map = L.map('map', { center:[44.0,-120.5], zoom:7 });
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution:'© <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
-  maxZoom:18
+  attribution:'© <a href="https://openstreetmap.org">OpenStreetMap</a> contributors', maxZoom:18
 }).addTo(map);
 
 let activeLayer = null;
 
-// ── FETCH REAL RIVER GEOMETRY FROM OVERPASS API ──────────────────────────────
 async function loadRivers() {
   const setStatus = t => document.getElementById('load-status').textContent = t;
-
-  // Rivers we want — OSM uses "name" tag
   const riverNames = Object.keys(RIVER_DATA).concat([
-    "Columbia River", "Snake River", "Siuslaw River", "Alsea River",
-    "Tillamook River", "Yamhill River", "Tualatin River", "Santiam River",
-    "Molalla River", "Pudding River", "Calapooia River", "Long Tom River"
+    "Columbia River","Snake River","Siuslaw River","Alsea River",
+    "Tillamook River","Yamhill River","Tualatin River","Santiam River",
+    "Molalla River","Calapooia River","Long Tom River"
   ]);
-
-  // Build Overpass query — fetch all waterways named in our list within Oregon's bounding box
-  // bbox: south, west, north, east
   const bbox = "41.9,-124.7,46.3,-116.4";
-  const nameFilters = riverNames.map(n => `["name"="${n}"]`).join('');
-
-  // Query for all waterways with any of our river names
-  const nameUnion = riverNames.map(n =>
-    `way["waterway"~"river|stream"]["name"="${n}"](${bbox});`
-  ).join('\n');
-
-  const query = `
-    [out:json][timeout:60];
-    (
-      ${nameUnion}
-    );
-    out geom;
-  `;
-
+  const nameUnion = riverNames.map(n => `way["waterway"~"river|stream"]["name"="${n}"](${bbox});`).join('\n');
+  const query = `[out:json][timeout:60];\n(\n${nameUnion}\n);\nout geom;`;
   setStatus('Querying Overpass API for Oregon waterways…');
-
   try {
-    const res = await fetch('https://overpass-api.de/api/interpreter', {
-      method: 'POST',
-      body: 'data=' + encodeURIComponent(query)
-    });
-
+    const res = await fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:'data='+encodeURIComponent(query) });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const json = await res.json();
-
     setStatus(`Drawing ${json.elements.length} river segments…`);
     drawRivers(json.elements);
-
-    // Done
     const loading = document.getElementById('loading');
     loading.classList.add('done');
-    setTimeout(() => loading.style.display = 'none', 600);
+    setTimeout(() => loading.style.display='none', 600);
     document.getElementById('map-hint').classList.remove('hidden');
-
-  } catch (err) {
+  } catch(err) {
     console.error('Overpass error:', err);
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('error-banner').style.display = 'block';
-    // Fall back to approximate coords
+    document.getElementById('loading').style.display='none';
+    document.getElementById('error-banner').style.display='block';
     loadFallback();
   }
 }
 
-// ── DRAW RIVERS FROM OSM DATA ─────────────────────────────────────────────────
 function drawRivers(elements) {
-  // Group segments by river name
   const byName = {};
   elements.forEach(el => {
     if (!el.geometry || !el.tags?.name) return;
@@ -322,26 +277,14 @@ function drawRivers(elements) {
     if (!byName[name]) byName[name] = [];
     byName[name].push(el.geometry.map(p => [p.lat, p.lon]));
   });
-
   Object.entries(byName).forEach(([name, segments]) => {
     const data = RIVER_DATA[name];
     const color = data ? STATUS_COLORS[data.status] : DEFAULT_COLOR;
-
     segments.forEach(coords => {
       if (coords.length < 2) return;
-
-      // Glow
-      L.polyline(coords, { color, weight:10, opacity:.15, lineJoin:'round' }).addTo(map);
-
-      // Main line
-      const poly = L.polyline(coords, {
-        color, weight:3.5, opacity:.9, lineJoin:'round', lineCap:'round'
-      }).addTo(map);
-
-      poly.bindTooltip(name, {
-        className:'river-tooltip', sticky:true, offset:[10,0]
-      });
-
+      L.polyline(coords, { color, weight:10, opacity:.12, lineJoin:'round' }).addTo(map);
+      const poly = L.polyline(coords, { color, weight:3.5, opacity:.9, lineJoin:'round', lineCap:'round' }).addTo(map);
+      poly.bindTooltip(name, { className:'river-tooltip', sticky:true, offset:[10,0] });
       poly.on('mouseover', () => { if(poly!==activeLayer) poly.setStyle({weight:6,opacity:1}); });
       poly.on('mouseout',  () => { if(poly!==activeLayer) poly.setStyle({weight:3.5,opacity:.9}); });
       poly.on('click', () => {
@@ -354,29 +297,20 @@ function drawRivers(elements) {
   });
 }
 
-// ── SHOW DATA PANEL ───────────────────────────────────────────────────────────
 function showPanel(name, r) {
   document.getElementById('map-hint').classList.add('hidden');
   document.getElementById('panel-name').textContent   = name;
   document.getElementById('panel-region').textContent = r.region;
   document.getElementById('panel-note').textContent   = r.note;
-
   const badge = document.getElementById('status-badge');
   badge.className = `status-big ${r.status}`;
   badge.innerHTML = `<div class="sdot ${r.status}"></div>${r.statusLabel}`;
-
   document.getElementById('stat-cards').innerHTML = [
-    { icon:'💧', label:'Flow Rate',   value:r.flow,    unit:'cfs'     },
-    { icon:'📏', label:'Water Level', value:r.level,   unit:'ft'      },
+    { icon:'💧', label:'Flow Rate',   value:r.flow,    unit:'cfs' },
+    { icon:'📏', label:'Water Level', value:r.level,   unit:'ft'  },
     { icon:'👁️', label:'Clarity',     value:r.clarity, unit:r.clarityUnit },
-    { icon:'🌡️', label:'Water Temp',  value:r.temp,    unit:'°F'      },
-  ].map(s => `
-    <div class="stat-card">
-      <div class="stat-icon">${s.icon}</div>
-      <div class="stat-label">${s.label}</div>
-      <div class="stat-value">${s.value} <span class="stat-unit">${s.unit}</span></div>
-    </div>`).join('');
-
+    { icon:'🌡️', label:'Water Temp',  value:r.temp,    unit:'°F'  },
+  ].map(s=>`<div class="stat-card"><div class="stat-icon">${s.icon}</div><div class="stat-label">${s.label}</div><div class="stat-value">${s.value} <span class="stat-unit">${s.unit}</span></div></div>`).join('');
   document.getElementById('data-panel').classList.add('open');
 }
 
@@ -386,7 +320,6 @@ function closePanel() {
   document.getElementById('map-hint').classList.remove('hidden');
 }
 
-// ── FALLBACK: approximate coords if API fails ────────────────────────────────
 function loadFallback() {
   const fallback = [
     { name:"Willamette River", coords:[[43.55,-123.25],[44.05,-123.25],[44.80,-123.0],[45.20,-123.2],[45.52,-123.0],[45.68,-122.68]] },
@@ -401,7 +334,7 @@ function loadFallback() {
   fallback.forEach(r => {
     const data = RIVER_DATA[r.name];
     const color = data ? STATUS_COLORS[data.status] : DEFAULT_COLOR;
-    L.polyline(r.coords, { color, weight:10, opacity:.15 }).addTo(map);
+    L.polyline(r.coords, { color, weight:10, opacity:.12 }).addTo(map);
     const poly = L.polyline(r.coords, { color, weight:3.5, opacity:.9 }).addTo(map);
     poly.bindTooltip(r.name, { className:'river-tooltip', sticky:true, offset:[10,0] });
     poly.on('click', () => { if(data) showPanel(r.name, data); });
@@ -409,7 +342,6 @@ function loadFallback() {
   document.getElementById('map-hint').classList.remove('hidden');
 }
 
-// ── START ─────────────────────────────────────────────────────────────────────
 loadRivers();
 </script>
 </body>
