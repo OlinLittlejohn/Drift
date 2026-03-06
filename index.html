@@ -227,118 +227,274 @@
 
 <!-- SPECIES TAB -->
 <div id="tab-species" class="tab-panel" style="display:none;position:fixed;top:58px;left:0;right:0;bottom:0;overflow-y:auto;background:var(--black);padding:40px 24px;">
-  <div style="max-width:960px;margin:0 auto;">
+  <div style="max-width:1100px;margin:0 auto;">
     <h2 style="font-family:'Righteous',cursive;font-size:2rem;color:var(--sky);margin-bottom:8px;">Oregon River Species</h2>
     <p style="color:var(--text-dim);margin-bottom:36px;font-size:.95rem;">Common sportfish found in Oregon's rivers and waterways.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;">
-      <div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#3DDC84';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
-        <div style="font-size:2.2rem;margin-bottom:12px;">🐟</div>
-        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#3DDC84;margin-bottom:3px;">Chinook Salmon</div>
-        <div style="font-size:.7rem;color:rgba(180,220,240,.35);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Oncorhynchus tshawytscha</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📅 Spring & Fall</span>
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📍 Willamette, Rogue, Deschutes</span>
+      
+      <div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;overflow:hidden;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#3DDC84';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <!-- Fish image -->
+        <div style="width:100%;height:160px;background:#0d0d0d;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;">
+          <img src="images/chinook-salmon.jpg" alt="Chinook Salmon"
+            style="width:100%;height:100%;object-fit:cover;display:block;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div style="display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;color:rgba(180,220,240,.2);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;gap:8px;">
+            <span style="font-size:2.5rem;">🐟</span>
+            <span>Add images/chinook-salmon.jpg</span>
+          </div>
         </div>
-        <p style="font-size:.82rem;color:rgba(180,220,240,.6);line-height:1.65;">Oregon's most prized sportfish with two distinct runs — spring Chinook (March–June) and fall Chinook (August–November). The Willamette and Rogue rivers are top destinations. Spring fish are considered superior table fare.</p>
-      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#3DDC84';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
-        <div style="font-size:2.2rem;margin-bottom:12px;">🐟</div>
-        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#3DDC84;margin-bottom:3px;">Coho Salmon</div>
-        <div style="font-size:.7rem;color:rgba(180,220,240,.35);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Oncorhynchus kisutch</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📅 Fall</span>
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📍 Siletz, Alsea, Nestucca</span>
+        <!-- Card body -->
+        <div style="padding:18px 20px 20px;">
+          <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#3DDC84;margin-bottom:2px;">Chinook Salmon</div>
+          <div style="font-size:.7rem;color:rgba(180,220,240,.3);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Oncorhynchus tshawytscha</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📅 Spring & Fall</span>
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📍 Willamette, Rogue, Deschutes</span>
+          </div>
+          <p style="font-size:.81rem;color:rgba(180,220,240,.55);line-height:1.65;margin:0;">Oregon's most prized sportfish with two distinct runs — spring Chinook (March–June) and fall Chinook (August–November). The Willamette and Rogue rivers are top destinations. Spring fish are considered superior table fare.</p>
         </div>
-        <p style="font-size:.82rem;color:rgba(180,220,240,.6);line-height:1.65;">Fall run fish (September–December) found primarily in coastal rivers. The Siletz and Alsea rivers offer some of Oregon's best Coho fishing. Known for aggressive strikes on spinners and spoons.</p>
-      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#2A9FD6';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
-        <div style="font-size:2.2rem;margin-bottom:12px;">🎣</div>
-        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#2A9FD6;margin-bottom:3px;">Winter Steelhead</div>
-        <div style="font-size:.7rem;color:rgba(180,220,240,.35);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Oncorhynchus mykiss</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📅 Winter & Early Spring</span>
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📍 Sandy, Clackamas, Rogue</span>
+      </div>
+      <div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;overflow:hidden;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#3DDC84';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <!-- Fish image -->
+        <div style="width:100%;height:160px;background:#0d0d0d;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;">
+          <img src="images/coho-salmon.jpg" alt="Coho Salmon"
+            style="width:100%;height:100%;object-fit:cover;display:block;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div style="display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;color:rgba(180,220,240,.2);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;gap:8px;">
+            <span style="font-size:2.5rem;">🐟</span>
+            <span>Add images/coho-salmon.jpg</span>
+          </div>
         </div>
-        <p style="font-size:.82rem;color:rgba(180,220,240,.6);line-height:1.65;">Oregon's iconic sea-run rainbow trout returns to rivers December–April. The Sandy and Clackamas rivers near Portland see heavy runs. Large, powerful fish averaging 8–12 lbs make these one of the most sought-after gamefish in the Pacific Northwest.</p>
-      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#2A9FD6';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
-        <div style="font-size:2.2rem;margin-bottom:12px;">🎣</div>
-        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#2A9FD6;margin-bottom:3px;">Summer Steelhead</div>
-        <div style="font-size:.7rem;color:rgba(180,220,240,.35);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Oncorhynchus mykiss</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📅 Summer & Fall</span>
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📍 Deschutes, North Umpqua</span>
+        <!-- Card body -->
+        <div style="padding:18px 20px 20px;">
+          <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#3DDC84;margin-bottom:2px;">Coho Salmon</div>
+          <div style="font-size:.7rem;color:rgba(180,220,240,.3);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Oncorhynchus kisutch</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📅 Fall</span>
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📍 Siletz, Alsea, Nestucca</span>
+          </div>
+          <p style="font-size:.81rem;color:rgba(180,220,240,.55);line-height:1.65;margin:0;">Fall run fish (September–December) found primarily in coastal rivers. The Siletz and Alsea rivers offer some of Oregon's best Coho fishing. Known for aggressive strikes on spinners and spoons.</p>
         </div>
-        <p style="font-size:.82rem;color:rgba(180,220,240,.6);line-height:1.65;">Enter rivers June–October while flows are low and clear. The Deschutes River below Pelton Dam is legendary for summer steelhead on dry flies. The North Umpqua is considered one of the finest summer steelhead rivers in the world.</p>
-      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#6EC6E6';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
-        <div style="font-size:2.2rem;margin-bottom:12px;">🐠</div>
-        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#6EC6E6;margin-bottom:3px;">Rainbow Trout</div>
-        <div style="font-size:.7rem;color:rgba(180,220,240,.35);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Oncorhynchus mykiss</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📅 Year-round</span>
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📍 McKenzie, Metolius, Deschutes</span>
+      </div>
+      <div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;overflow:hidden;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#2A9FD6';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <!-- Fish image -->
+        <div style="width:100%;height:160px;background:#0d0d0d;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;">
+          <img src="images/winter-steelhead.jpg" alt="Winter Steelhead"
+            style="width:100%;height:100%;object-fit:cover;display:block;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div style="display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;color:rgba(180,220,240,.2);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;gap:8px;">
+            <span style="font-size:2.5rem;">🐟</span>
+            <span>Add images/winter-steelhead.jpg</span>
+          </div>
         </div>
-        <p style="font-size:.82rem;color:rgba(180,220,240,.6);line-height:1.65;">Found statewide in cold, clear streams year-round. The McKenzie River is famous for its wild rainbow trout and traditional McKenzie drift boat fishing. The Metolius River near Camp Sherman holds trophy-sized fish.</p>
-      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#6EC6E6';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
-        <div style="font-size:2.2rem;margin-bottom:12px;">🐠</div>
-        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#6EC6E6;margin-bottom:3px;">Cutthroat Trout</div>
-        <div style="font-size:.7rem;color:rgba(180,220,240,.35);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Oncorhynchus clarkii</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📅 Spring & Summer</span>
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📍 Illinois, Coquille, Nehalem</span>
+        <!-- Card body -->
+        <div style="padding:18px 20px 20px;">
+          <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#2A9FD6;margin-bottom:2px;">Winter Steelhead</div>
+          <div style="font-size:.7rem;color:rgba(180,220,240,.3);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Oncorhynchus mykiss</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📅 Winter & Early Spring</span>
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📍 Sandy, Clackamas, Rogue</span>
+          </div>
+          <p style="font-size:.81rem;color:rgba(180,220,240,.55);line-height:1.65;margin:0;">Oregon's iconic sea-run rainbow trout returns to rivers December–April. The Sandy and Clackamas rivers near Portland see heavy runs. Large, powerful fish averaging 8–12 lbs.</p>
         </div>
-        <p style="font-size:.82rem;color:rgba(180,220,240,.6);line-height:1.65;">Oregon's native trout available in two forms — coastal cutthroat in coastal rivers (spring–summer) and westslope cutthroat in eastern mountain streams. The Illinois River in SW Oregon offers excellent wild cutthroat fishing.</p>
-      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#FFD93D';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
-        <div style="font-size:2.2rem;margin-bottom:12px;">🐡</div>
-        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#FFD93D;margin-bottom:3px;">Bull Trout</div>
-        <div style="font-size:.7rem;color:rgba(180,220,240,.35);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Salvelinus confluentus</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📅 Summer & Fall</span>
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📍 Metolius, Lostine, Imnaha</span>
+      </div>
+      <div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;overflow:hidden;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#2A9FD6';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <!-- Fish image -->
+        <div style="width:100%;height:160px;background:#0d0d0d;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;">
+          <img src="images/summer-steelhead.jpg" alt="Summer Steelhead"
+            style="width:100%;height:100%;object-fit:cover;display:block;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div style="display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;color:rgba(180,220,240,.2);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;gap:8px;">
+            <span style="font-size:2.5rem;">🐟</span>
+            <span>Add images/summer-steelhead.jpg</span>
+          </div>
         </div>
-        <p style="font-size:.82rem;color:rgba(180,220,240,.6);line-height:1.65;">Native to Oregon's coldest headwater streams, bull trout are most active in summer and fall (June–October). The Metolius River holds a strong population. Listed as threatened — catch and release only in most Oregon waters.</p>
-      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#FF7B2E';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
-        <div style="font-size:2.2rem;margin-bottom:12px;">🐟</div>
-        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#FF7B2E;margin-bottom:3px;">Brown Trout</div>
-        <div style="font-size:.7rem;color:rgba(180,220,240,.35);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Salmo trutta</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📅 Fall</span>
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📍 Deschutes, Metolius</span>
+        <!-- Card body -->
+        <div style="padding:18px 20px 20px;">
+          <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#2A9FD6;margin-bottom:2px;">Summer Steelhead</div>
+          <div style="font-size:.7rem;color:rgba(180,220,240,.3);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Oncorhynchus mykiss</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📅 Summer & Fall</span>
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📍 Deschutes, North Umpqua</span>
+          </div>
+          <p style="font-size:.81rem;color:rgba(180,220,240,.55);line-height:1.65;margin:0;">Enter rivers June–October while flows are low and clear. The Deschutes River below Pelton Dam is legendary for summer steelhead on dry flies. The North Umpqua is considered one of the finest summer steelhead rivers in the world.</p>
         </div>
-        <p style="font-size:.82rem;color:rgba(180,220,240,.6);line-height:1.65;">Introduced species that thrives in the Deschutes and Metolius rivers. Fall (September–November) is prime time when browns are aggressive ahead of spawning. Known for being selective and a challenge to fool — a true test for fly anglers.</p>
-      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#FF7B2E';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
-        <div style="font-size:2.2rem;margin-bottom:12px;">🎣</div>
-        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#FF7B2E;margin-bottom:3px;">Smallmouth Bass</div>
-        <div style="font-size:.7rem;color:rgba(180,220,240,.35);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Micropterus dolomieu</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📅 Summer</span>
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📍 John Day, Umpqua, Rogue</span>
+      </div>
+      <div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;overflow:hidden;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#6EC6E6';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <!-- Fish image -->
+        <div style="width:100%;height:160px;background:#0d0d0d;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;">
+          <img src="images/rainbow-trout.jpg" alt="Rainbow Trout"
+            style="width:100%;height:100%;object-fit:cover;display:block;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div style="display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;color:rgba(180,220,240,.2);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;gap:8px;">
+            <span style="font-size:2.5rem;">🐟</span>
+            <span>Add images/rainbow-trout.jpg</span>
+          </div>
         </div>
-        <p style="font-size:.82rem;color:rgba(180,220,240,.6);line-height:1.65;">Thrives in warm, rocky river sections during summer (June–September). The John Day River offers some of the best smallmouth bass fishing in the Pacific Northwest. Often overlooked by trout anglers but puts up an incredible fight.</p>
-      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#6EC6E6';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
-        <div style="font-size:2.2rem;margin-bottom:12px;">🐡</div>
-        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#6EC6E6;margin-bottom:3px;">Walleye</div>
-        <div style="font-size:.7rem;color:rgba(180,220,240,.35);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Sander vitreus</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📅 Spring & Winter</span>
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📍 Columbia River, Snake River</span>
+        <!-- Card body -->
+        <div style="padding:18px 20px 20px;">
+          <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#6EC6E6;margin-bottom:2px;">Rainbow Trout</div>
+          <div style="font-size:.7rem;color:rgba(180,220,240,.3);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Oncorhynchus mykiss</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📅 Year-round</span>
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📍 McKenzie, Metolius, Deschutes</span>
+          </div>
+          <p style="font-size:.81rem;color:rgba(180,220,240,.55);line-height:1.65;margin:0;">Found statewide in cold, clear streams year-round. The McKenzie River is famous for its wild rainbow trout and traditional drift boat fishing. The Metolius River near Camp Sherman holds trophy-sized fish.</p>
         </div>
-        <p style="font-size:.82rem;color:rgba(180,220,240,.6);line-height:1.65;">Found in the Columbia and Snake rivers with peak fishing in spring (March–May) during spawning runs and again in winter. The Columbia River near John Day Dam is a consistently productive walleye destination.</p>
-      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#FF7B2E';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
-        <div style="font-size:2.2rem;margin-bottom:12px;">🐟</div>
-        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#FF7B2E;margin-bottom:3px;">Channel Catfish</div>
-        <div style="font-size:.7rem;color:rgba(180,220,240,.35);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Ictalurus punctatus</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📅 Summer</span>
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📍 Willamette, Columbia, Snake</span>
+      </div>
+      <div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;overflow:hidden;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#6EC6E6';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <!-- Fish image -->
+        <div style="width:100%;height:160px;background:#0d0d0d;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;">
+          <img src="images/cutthroat-trout.jpg" alt="Cutthroat Trout"
+            style="width:100%;height:100%;object-fit:cover;display:block;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div style="display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;color:rgba(180,220,240,.2);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;gap:8px;">
+            <span style="font-size:2.5rem;">🐟</span>
+            <span>Add images/cutthroat-trout.jpg</span>
+          </div>
         </div>
-        <p style="font-size:.82rem;color:rgba(180,220,240,.6);line-height:1.65;">Most active during warm summer months (June–August) in slower river sections. The lower Willamette and Columbia rivers hold good catfish populations. Night fishing with cut bait or chicken liver near deep holes is most productive.</p>
-      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#FF4D6D';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
-        <div style="font-size:2.2rem;margin-bottom:12px;">🐠</div>
-        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#FF4D6D;margin-bottom:3px;">White Sturgeon</div>
-        <div style="font-size:.7rem;color:rgba(180,220,240,.35);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Acipenser transmontanus</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📅 Year-round</span>
-          <span style="background:rgba(42,159,214,.1);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.7rem;font-weight:700;color:#6EC6E6;">📍 Columbia River, Snake River</span>
+        <!-- Card body -->
+        <div style="padding:18px 20px 20px;">
+          <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#6EC6E6;margin-bottom:2px;">Cutthroat Trout</div>
+          <div style="font-size:.7rem;color:rgba(180,220,240,.3);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Oncorhynchus clarkii</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📅 Spring & Summer</span>
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📍 Illinois, Coquille, Nehalem</span>
+          </div>
+          <p style="font-size:.81rem;color:rgba(180,220,240,.55);line-height:1.65;margin:0;">Oregon's native trout in two forms — coastal cutthroat in coastal rivers (spring–summer) and westslope cutthroat in eastern mountain streams. The Illinois River in SW Oregon offers excellent wild cutthroat fishing.</p>
         </div>
-        <p style="font-size:.82rem;color:rgba(180,220,240,.6);line-height:1.65;">Ancient species that can live 100+ years and grow over 10 feet long. Found year-round in the Columbia and Snake rivers with peak retention seasons in spring and fall. Strict slot size limits apply — most fish must be released. A true bucket-list catch.</p>
+      </div>
+      <div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;overflow:hidden;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#FFD93D';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <!-- Fish image -->
+        <div style="width:100%;height:160px;background:#0d0d0d;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;">
+          <img src="images/bull-trout.jpg" alt="Bull Trout"
+            style="width:100%;height:100%;object-fit:cover;display:block;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div style="display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;color:rgba(180,220,240,.2);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;gap:8px;">
+            <span style="font-size:2.5rem;">🐟</span>
+            <span>Add images/bull-trout.jpg</span>
+          </div>
+        </div>
+        <!-- Card body -->
+        <div style="padding:18px 20px 20px;">
+          <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#FFD93D;margin-bottom:2px;">Bull Trout</div>
+          <div style="font-size:.7rem;color:rgba(180,220,240,.3);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Salvelinus confluentus</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📅 Summer & Fall</span>
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📍 Metolius, Lostine, Imnaha</span>
+          </div>
+          <p style="font-size:.81rem;color:rgba(180,220,240,.55);line-height:1.65;margin:0;">Native to Oregon's coldest headwater streams, most active June–October. The Metolius River holds a strong population. Listed as threatened — catch and release only in most Oregon waters.</p>
+        </div>
+      </div>
+      <div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;overflow:hidden;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#FF7B2E';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <!-- Fish image -->
+        <div style="width:100%;height:160px;background:#0d0d0d;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;">
+          <img src="images/brown-trout.jpg" alt="Brown Trout"
+            style="width:100%;height:100%;object-fit:cover;display:block;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div style="display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;color:rgba(180,220,240,.2);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;gap:8px;">
+            <span style="font-size:2.5rem;">🐟</span>
+            <span>Add images/brown-trout.jpg</span>
+          </div>
+        </div>
+        <!-- Card body -->
+        <div style="padding:18px 20px 20px;">
+          <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#FF7B2E;margin-bottom:2px;">Brown Trout</div>
+          <div style="font-size:.7rem;color:rgba(180,220,240,.3);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Salmo trutta</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📅 Fall</span>
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📍 Deschutes, Metolius</span>
+          </div>
+          <p style="font-size:.81rem;color:rgba(180,220,240,.55);line-height:1.65;margin:0;">Thrives in the Deschutes and Metolius rivers. Fall (September–November) is prime time when browns are aggressive ahead of spawning. Known for being selective — a true test for fly anglers.</p>
+        </div>
+      </div>
+      <div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;overflow:hidden;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#FF7B2E';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <!-- Fish image -->
+        <div style="width:100%;height:160px;background:#0d0d0d;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;">
+          <img src="images/smallmouth-bass.jpg" alt="Smallmouth Bass"
+            style="width:100%;height:100%;object-fit:cover;display:block;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div style="display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;color:rgba(180,220,240,.2);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;gap:8px;">
+            <span style="font-size:2.5rem;">🐟</span>
+            <span>Add images/smallmouth-bass.jpg</span>
+          </div>
+        </div>
+        <!-- Card body -->
+        <div style="padding:18px 20px 20px;">
+          <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#FF7B2E;margin-bottom:2px;">Smallmouth Bass</div>
+          <div style="font-size:.7rem;color:rgba(180,220,240,.3);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Micropterus dolomieu</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📅 Summer</span>
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📍 John Day, Umpqua, Rogue</span>
+          </div>
+          <p style="font-size:.81rem;color:rgba(180,220,240,.55);line-height:1.65;margin:0;">Thrives in warm, rocky river sections during summer (June–September). The John Day River offers some of the best smallmouth bass fishing in the Pacific Northwest. Puts up an incredible fight.</p>
+        </div>
+      </div>
+      <div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;overflow:hidden;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#6EC6E6';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <!-- Fish image -->
+        <div style="width:100%;height:160px;background:#0d0d0d;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;">
+          <img src="images/walleye.jpg" alt="Walleye"
+            style="width:100%;height:100%;object-fit:cover;display:block;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div style="display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;color:rgba(180,220,240,.2);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;gap:8px;">
+            <span style="font-size:2.5rem;">🐟</span>
+            <span>Add images/walleye.jpg</span>
+          </div>
+        </div>
+        <!-- Card body -->
+        <div style="padding:18px 20px 20px;">
+          <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#6EC6E6;margin-bottom:2px;">Walleye</div>
+          <div style="font-size:.7rem;color:rgba(180,220,240,.3);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Sander vitreus</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📅 Spring & Winter</span>
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📍 Columbia River, Snake River</span>
+          </div>
+          <p style="font-size:.81rem;color:rgba(180,220,240,.55);line-height:1.65;margin:0;">Found in the Columbia and Snake rivers with peak fishing in spring (March–May) and winter. The Columbia River near John Day Dam is a consistently productive walleye destination.</p>
+        </div>
+      </div>
+      <div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;overflow:hidden;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#FF7B2E';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <!-- Fish image -->
+        <div style="width:100%;height:160px;background:#0d0d0d;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;">
+          <img src="images/channel-catfish.jpg" alt="Channel Catfish"
+            style="width:100%;height:100%;object-fit:cover;display:block;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div style="display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;color:rgba(180,220,240,.2);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;gap:8px;">
+            <span style="font-size:2.5rem;">🐟</span>
+            <span>Add images/channel-catfish.jpg</span>
+          </div>
+        </div>
+        <!-- Card body -->
+        <div style="padding:18px 20px 20px;">
+          <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#FF7B2E;margin-bottom:2px;">Channel Catfish</div>
+          <div style="font-size:.7rem;color:rgba(180,220,240,.3);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Ictalurus punctatus</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📅 Summer</span>
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📍 Willamette, Columbia, Snake</span>
+          </div>
+          <p style="font-size:.81rem;color:rgba(180,220,240,.55);line-height:1.65;margin:0;">Most active during warm summer months (June–August) in slower river sections. Night fishing with cut bait near deep holes is most productive on the lower Willamette and Columbia rivers.</p>
+        </div>
+      </div>
+      <div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;overflow:hidden;transition:border-color .2s,transform .2s;cursor:default;" onmouseover="this.style.borderColor='#FF4D6D';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <!-- Fish image -->
+        <div style="width:100%;height:160px;background:#0d0d0d;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;">
+          <img src="images/white-sturgeon.jpg" alt="White Sturgeon"
+            style="width:100%;height:100%;object-fit:cover;display:block;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div style="display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;color:rgba(180,220,240,.2);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;gap:8px;">
+            <span style="font-size:2.5rem;">🐟</span>
+            <span>Add images/white-sturgeon.jpg</span>
+          </div>
+        </div>
+        <!-- Card body -->
+        <div style="padding:18px 20px 20px;">
+          <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#FF4D6D;margin-bottom:2px;">White Sturgeon</div>
+          <div style="font-size:.7rem;color:rgba(180,220,240,.3);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;font-style:italic;">Acipenser transmontanus</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📅 Year-round</span>
+            <span style="background:rgba(42,159,214,.08);border:1px solid rgba(42,159,214,.2);border-radius:20px;padding:3px 10px;font-size:.68rem;font-weight:700;color:#6EC6E6;">📍 Columbia River, Snake River</span>
+          </div>
+          <p style="font-size:.81rem;color:rgba(180,220,240,.55);line-height:1.65;margin:0;">Ancient species that can live 100+ years and grow over 10 feet long. Year-round in the Columbia and Snake rivers. Strict slot size limits apply — most fish must be released. A true bucket-list catch.</p>
+        </div>
       </div>
     </div>
   </div>
