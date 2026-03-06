@@ -679,6 +679,23 @@ function nwsIcon(shortForecast) {
   return '🌤️';
 }
 
+function nwsSimple(shortForecast) {
+  const f = shortForecast.toLowerCase();
+  if (f.includes('thunder')) return 'Thunderstorm';
+  if (f.includes('blizzard')) return 'Blizzard';
+  if (f.includes('snow')) return 'Snow';
+  if (f.includes('freezing rain') || f.includes('sleet') || f.includes('ice')) return 'Freezing Rain';
+  if (f.includes('heavy rain')) return 'Heavy Rain';
+  if (f.includes('rain') || f.includes('shower') || f.includes('drizzle')) return 'Rain';
+  if (f.includes('fog')) return 'Foggy';
+  if (f.includes('mostly cloudy') || f.includes('overcast')) return 'Cloudy';
+  if (f.includes('partly cloudy') || f.includes('partly sunny')) return 'Partly Cloudy';
+  if (f.includes('mostly sunny')) return 'Mostly Sunny';
+  if (f.includes('sunny') || f.includes('clear')) return 'Sunny';
+  if (f.includes('wind')) return 'Windy';
+  return 'Mixed';
+}
+
 // ── USGS live data ────────────────────────────────────────────────────────────
 async function fetchUSGS(siteId) {
   try {
@@ -751,7 +768,7 @@ async function showPanel(name, r) {
           <div class="w-day">${p.name.replace('This ', '').substring(0,3)}</div>
           <div class="w-icon">${nwsIcon(p.shortForecast)}</div>
           <div class="w-hi">${p.temperature}°${p.temperatureUnit}</div>
-          <div class="w-desc">${p.shortForecast.substring(0,18)}</div>
+          <div class="w-desc">${nwsSimple(p.shortForecast)}</div>
         </div>`).join('') +
       '</div>';
   } else {
