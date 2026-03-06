@@ -45,6 +45,12 @@
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.5)} }
     .nav-divider { width:1px; height:20px; background:var(--border); }
     .nav-tag { padding:5px 13px; border-radius:20px; border:1px solid var(--border); background:rgba(42,159,214,.07); color:var(--sky); font-size:.78rem; font-weight:800; }
+    .nav-links { display:flex; align-items:center; gap:4px; }
+    .nav-link { color:var(--text-dim); text-decoration:none; font-size:.85rem; font-weight:700; padding:6px 14px; border-radius:8px; transition:color .2s, background .2s; }
+    .nav-link:hover { color:var(--sky); background:rgba(42,159,214,.08); }
+    .nav-link.active { color:var(--cerulean); }
+    .nav-link-ext { border:1px solid var(--border); color:var(--sky); }
+    .nav-link-ext:hover { border-color:var(--cerulean); background:rgba(42,159,214,.1); }
 
     .app { position:fixed; top:58px; left:0; right:0; bottom:0; display:flex; flex-direction:column; }
     #map-wrap { position:relative; flex:1 1 auto; min-height:0; }
@@ -168,13 +174,19 @@
     <div class="nav-logo-text">Drift</div>
   </a>
   <div class="nav-right">
-    <div class="live-dot"><div class="pulse"></div> Live Data</div>
+    <div class="nav-links">
+      <a class="nav-link active" href="#" onclick="showTab(event,'map')">🗺️ River Map</a>
+      <a class="nav-link" href="#" onclick="showTab(event,'report')">📋 Fishing Report</a>
+      <a class="nav-link" href="#" onclick="showTab(event,'species')">🐟 Species</a>
+      <a class="nav-link nav-link-ext" href="https://www.eregulations.com/oregon/fishing" target="_blank" rel="noopener">📖 Regulations ↗</a>
+    </div>
     <div class="nav-divider"></div>
-    <div class="nav-tag">Oregon</div>
+    <div class="live-dot"><div class="pulse"></div> Live</div>
   </div>
 </nav>
 
-<div class="app">
+<!-- TAB PANELS -->
+<div id="tab-map" class="tab-panel" style="position:fixed;top:58px;left:0;right:0;bottom:0;display:flex;flex-direction:column;">
   <div id="map-wrap">
     <div id="map"></div>
     <div id="loading">
@@ -206,6 +218,93 @@
       <div class="panel-right">
         <div class="status-big" id="status-badge"></div>
         <div class="panel-note" id="panel-note"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end tab-map -->
+
+<!-- FISHING REPORT TAB -->
+<div id="tab-report" class="tab-panel" style="display:none;position:fixed;top:58px;left:0;right:0;bottom:0;flex-direction:column;align-items:center;justify-content:center;background:var(--black);gap:24px;">
+  <div style="text-align:center;max-width:480px;padding:40px 24px;">
+    <div style="font-size:3rem;margin-bottom:16px;">📋</div>
+    <h2 style="font-family:'Righteous',cursive;font-size:1.8rem;color:var(--sky);margin-bottom:12px;">Fishing Report</h2>
+    <p style="color:var(--text-dim);line-height:1.7;margin-bottom:32px;">Up-to-date fishing reports for Oregon rivers, lakes, and coastal waters — provided by the Oregon Department of Fish & Wildlife.</p>
+    <a href="https://myodfw.com/recreation-report/fishing-report" target="_blank" rel="noopener"
+      style="display:inline-flex;align-items:center;gap:10px;background:var(--cerulean);color:#000;font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;padding:14px 28px;border-radius:50px;text-decoration:none;transition:background .2s;box-shadow:0 4px 24px rgba(42,159,214,.3);"
+      onmouseover="this.style.background='#6EC6E6'" onmouseout="this.style.background='var(--cerulean)'">
+      View ODFW Fishing Report ↗
+    </a>
+  </div>
+</div>
+
+<!-- SPECIES TAB -->
+<div id="tab-species" class="tab-panel" style="display:none;position:fixed;top:58px;left:0;right:0;bottom:0;overflow-y:auto;background:var(--black);padding:40px 24px;">
+  <div style="max-width:900px;margin:0 auto;">
+    <h2 style="font-family:'Righteous',cursive;font-size:2rem;color:var(--sky);margin-bottom:8px;">Oregon River Species</h2>
+    <p style="color:var(--text-dim);margin-bottom:36px;font-size:.95rem;">Common sportfish found in Oregon's rivers and waterways.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;">
+      <div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;" onmouseover="this.style.borderColor='#3DDC84';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <div style="font-size:2rem;margin-bottom:10px;">🐟</div>
+        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#3DDC84;margin-bottom:3px;">Chinook Salmon</div>
+        <div style="font-size:.72rem;color:rgba(180,220,240,.4);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;">King Salmon</div>
+        <p style="font-size:.83rem;color:rgba(180,220,240,.6);line-height:1.6;">Oregon's most prized sportfish. Spring and fall runs on the Willamette, Rogue, and Deschutes. Can exceed 50 lbs.</p>
+      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;" onmouseover="this.style.borderColor='#3DDC84';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <div style="font-size:2rem;margin-bottom:10px;">🐟</div>
+        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#3DDC84;margin-bottom:3px;">Coho Salmon</div>
+        <div style="font-size:.72rem;color:rgba(180,220,240,.4);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;">Silver Salmon</div>
+        <p style="font-size:.83rem;color:rgba(180,220,240,.6);line-height:1.6;">Popular fall run fish found in coastal rivers and the lower Columbia. Known for aggressive strikes on spinners.</p>
+      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;" onmouseover="this.style.borderColor='#2A9FD6';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <div style="font-size:2rem;margin-bottom:10px;">🎣</div>
+        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#2A9FD6;margin-bottom:3px;">Steelhead</div>
+        <div style="font-size:.72rem;color:rgba(180,220,240,.4);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;">Rainbow Trout (sea-run)</div>
+        <p style="font-size:.83rem;color:rgba(180,220,240,.6);line-height:1.6;">Oregon's iconic winter and summer steelhead runs. Found statewide — Deschutes and Rogue are legendary.</p>
+      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;" onmouseover="this.style.borderColor='#6EC6E6';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <div style="font-size:2rem;margin-bottom:10px;">🐠</div>
+        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#6EC6E6;margin-bottom:3px;">Rainbow Trout</div>
+        <div style="font-size:.72rem;color:rgba(180,220,240,.4);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;">Redband Trout</div>
+        <p style="font-size:.83rem;color:rgba(180,220,240,.6);line-height:1.6;">Abundant in cold, clear streams statewide. McKenzie River known for exceptional wild rainbow fishing.</p>
+      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;" onmouseover="this.style.borderColor='#FFD93D';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <div style="font-size:2rem;margin-bottom:10px;">🐡</div>
+        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#FFD93D;margin-bottom:3px;">Bull Trout</div>
+        <div style="font-size:.72rem;color:rgba(180,220,240,.4);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;">Dolly Varden</div>
+        <p style="font-size:.83rem;color:rgba(180,220,240,.6);line-height:1.6;">Native to cold headwater streams in Eastern Oregon. Sensitive indicator species — catch and release only in many areas.</p>
+      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;" onmouseover="this.style.borderColor='#FF7B2E';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <div style="font-size:2rem;margin-bottom:10px;">🐟</div>
+        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#FF7B2E;margin-bottom:3px;">Brown Trout</div>
+        <div style="font-size:.72rem;color:rgba(180,220,240,.4);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;">Salmo trutta</div>
+        <p style="font-size:.83rem;color:rgba(180,220,240,.6);line-height:1.6;">Introduced species thriving in the Deschutes and Metolius. Known for being selective and challenging to catch.</p>
+      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;" onmouseover="this.style.borderColor='#3DDC84';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <div style="font-size:2rem;margin-bottom:10px;">🐠</div>
+        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#3DDC84;margin-bottom:3px;">Cutthroat Trout</div>
+        <div style="font-size:.72rem;color:rgba(180,220,240,.4);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;">Coastal & Inland</div>
+        <p style="font-size:.83rem;color:rgba(180,220,240,.6);line-height:1.6;">Native to Oregon streams. Coastal cutthroat in coastal rivers; westslope cutthroat in eastern tributaries.</p>
+      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;" onmouseover="this.style.borderColor='#FFD93D';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <div style="font-size:2rem;margin-bottom:10px;">🐡</div>
+        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#FFD93D;margin-bottom:3px;">Largemouth Bass</div>
+        <div style="font-size:.72rem;color:rgba(180,220,240,.4);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;">Micropterus salmoides</div>
+        <p style="font-size:.83rem;color:rgba(180,220,240,.6);line-height:1.6;">Warm water lakes and slow river sections. John Day and Umpqua lower reaches hold good populations.</p>
+      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;" onmouseover="this.style.borderColor='#FF7B2E';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <div style="font-size:2rem;margin-bottom:10px;">🎣</div>
+        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#FF7B2E;margin-bottom:3px;">Smallmouth Bass</div>
+        <div style="font-size:.72rem;color:rgba(180,220,240,.4);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;">Bronze Bass</div>
+        <p style="font-size:.83rem;color:rgba(180,220,240,.6);line-height:1.6;">Thrives in the John Day, Umpqua, and Rogue rivers. Excellent summer fishing in warm, rocky runs.</p>
+      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;" onmouseover="this.style.borderColor='#6EC6E6';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <div style="font-size:2rem;margin-bottom:10px;">🐟</div>
+        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#6EC6E6;margin-bottom:3px;">Walleye</div>
+        <div style="font-size:.72rem;color:rgba(180,220,240,.4);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;">Sander vitreus</div>
+        <p style="font-size:.83rem;color:rgba(180,220,240,.6);line-height:1.6;">Found in the Columbia River and Snake River. Popular year-round with peak fishing in spring.</p>
+      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;" onmouseover="this.style.borderColor='#FF7B2E';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <div style="font-size:2rem;margin-bottom:10px;">🐡</div>
+        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#FF7B2E;margin-bottom:3px;">Channel Catfish</div>
+        <div style="font-size:.72rem;color:rgba(180,220,240,.4);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;">Ictalurus punctatus</div>
+        <p style="font-size:.83rem;color:rgba(180,220,240,.6);line-height:1.6;">Found in the Columbia, Snake, and Willamette rivers. Night fishing with bait most productive.</p>
+      </div><div style="background:#111;border:1px solid rgba(42,159,214,.15);border-radius:16px;padding:22px;transition:border-color .2s,transform .2s;" onmouseover="this.style.borderColor='#FF4D6D';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(42,159,214,.15)';this.style.transform='translateY(0)'">
+        <div style="font-size:2rem;margin-bottom:10px;">🐠</div>
+        <div style="font-family:'Righteous',cursive;font-size:1.1rem;color:#FF4D6D;margin-bottom:3px;">White Sturgeon</div>
+        <div style="font-size:.72rem;color:rgba(180,220,240,.4);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;">Acipenser transmontanus</div>
+        <p style="font-size:.83rem;color:rgba(180,220,240,.6);line-height:1.6;">Ancient species found in the Columbia and Snake. Can live 100+ years. Strict size and bag limits apply.</p>
       </div>
     </div>
   </div>
@@ -357,6 +456,14 @@ function closePanel() {
   document.getElementById('map-hint').classList.remove('hidden');
 }
 
+
+function showTab(e, tab) {
+  e.preventDefault();
+  document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  document.getElementById('tab-' + tab).style.display = tab === 'map' ? 'flex' : 'block';
+  e.target.classList.add('active');
+}
 
 loadRivers();
 </script>
