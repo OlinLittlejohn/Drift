@@ -119,44 +119,67 @@
       backdrop-filter:blur(8px); white-space:nowrap;
     }
 
+    /* ── DATA PANEL ── */
     #data-panel {
       flex:0 0 auto; background:var(--black-2);
-      border-top:1px solid var(--border);
-      box-shadow:0 -4px 32px rgba(0,0,0,.8);
+      border-top:2px solid var(--cerulean);
+      box-shadow:0 -4px 32px rgba(0,0,0,.9);
       overflow:hidden; max-height:0; opacity:0;
-      transition:max-height .4s cubic-bezier(.4,0,.2,1), opacity .3s;
+      transition:max-height .5s cubic-bezier(.4,0,.2,1), opacity .3s;
     }
-    #data-panel.open { max-height:260px; opacity:1; }
-    #data-panel::before { content:''; display:block; height:2px; background:linear-gradient(90deg, var(--cerulean), var(--sky), transparent); }
+    #data-panel.open { max-height:340px; opacity:1; }
 
-    .panel-inner { padding:18px 36px 22px; display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap; }
-    .panel-title-row { flex:0 0 100%; display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
-    .panel-title-left { display:flex; align-items:baseline; gap:12px; }
-    .panel-river-name { font-family:'Righteous',cursive; font-size:1.5rem; color:var(--sky); }
-    .panel-region { font-size:.75rem; color:var(--cerulean); font-weight:700; letter-spacing:1px; text-transform:uppercase; opacity:.8; }
-    .close-btn { background:none; border:1px solid var(--border); border-radius:6px; cursor:pointer; color:var(--text-dim); font-size:1rem; padding:3px 9px; transition:color .2s, border-color .2s, background .2s; }
+    .panel-titlebar {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 28px 10px;
+      border-bottom:1px solid var(--border);
+    }
+    .panel-title-left { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+    .panel-river-name { font-family:'Righteous',cursive; font-size:1.4rem; color:var(--sky); }
+    .panel-region { font-size:.72rem; color:var(--cerulean); font-weight:700; letter-spacing:1px; text-transform:uppercase; opacity:.8; }
+    .close-btn { background:none; border:1px solid var(--border); border-radius:6px; cursor:pointer; color:var(--text-dim); font-size:1rem; padding:3px 9px; transition:color .2s, border-color .2s, background .2s; flex-shrink:0; }
     .close-btn:hover { color:var(--sky); border-color:var(--cerulean); background:rgba(42,159,214,.08); }
 
-    .stat-cards { display:flex; gap:11px; flex-wrap:wrap; }
-    .stat-card { background:var(--black-4); border:1px solid var(--border); border-radius:12px; padding:12px 17px; min-width:108px; transition:border-color .2s, transform .2s, box-shadow .2s; cursor:default; }
-    .stat-card:hover { border-color:var(--cerulean); transform:translateY(-2px); box-shadow:0 4px 18px rgba(42,159,214,.12); }
-    .stat-icon { font-size:1.15rem; margin-bottom:4px; }
-    .stat-label { font-size:.68rem; font-weight:700; letter-spacing:.8px; text-transform:uppercase; color:var(--text-dim); margin-bottom:3px; }
-    .stat-value { font-family:'Righteous',cursive; font-size:1.12rem; color:var(--sky); }
-    .stat-unit { font-size:.68rem; color:var(--text-dim); font-family:'Nunito',sans-serif; font-weight:600; }
+    .panel-body { display:flex; gap:0; height:280px; overflow:hidden; }
+    .panel-col { flex:0 0 auto; width:240px; padding:12px 16px; border-right:1px solid var(--border); overflow-y:auto; }
+    .panel-col-wide { flex:1 1 auto; width:auto; border-right:none; }
+    .panel-col-title { font-size:.7rem; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:var(--cerulean); margin-bottom:10px; }
 
-    .panel-right { display:flex; flex-direction:column; gap:10px; }
-    .status-big { display:inline-flex; align-items:center; gap:8px; padding:9px 18px; border-radius:50px; font-weight:800; font-size:.9rem; }
+    .stat-loading { font-size:.78rem; color:var(--text-dim); padding:8px 0; }
+
+    .stat-cards { display:flex; flex-direction:column; gap:8px; }
+    .stat-card { background:var(--black-4); border:1px solid var(--border); border-radius:10px; padding:9px 13px; transition:border-color .2s; cursor:default; }
+    .stat-card:hover { border-color:var(--cerulean); }
+    .stat-label { font-size:.62rem; font-weight:700; letter-spacing:.8px; text-transform:uppercase; color:var(--text-dim); margin-bottom:2px; }
+    .stat-value { font-family:'Righteous',cursive; font-size:1.05rem; color:var(--sky); }
+    .stat-unit { font-size:.65rem; color:var(--text-dim); font-family:'Nunito',sans-serif; font-weight:600; }
+    .panel-note { font-size:.75rem; color:var(--text-dim); line-height:1.55; margin-top:10px; padding-top:10px; border-top:1px solid var(--border); }
+
+    /* status badge */
+    .status-big { display:inline-flex; align-items:center; gap:6px; padding:5px 12px; border-radius:50px; font-weight:800; font-size:.78rem; }
     .status-big.good    { background:rgba(61,220,132,.1);  color:var(--green);  border:1px solid rgba(61,220,132,.3); }
     .status-big.caution { background:rgba(255,217,61,.1);  color:var(--yellow); border:1px solid rgba(255,217,61,.3); }
     .status-big.high    { background:rgba(255,77,109,.1);  color:var(--red);    border:1px solid rgba(255,77,109,.3); }
     .status-big.low     { background:rgba(255,123,46,.1);  color:var(--orange); border:1px solid rgba(255,123,46,.3); }
-    .sdot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
-    .sdot.good    { background:var(--green);  box-shadow:0 0 5px var(--green); }
-    .sdot.caution { background:var(--yellow); box-shadow:0 0 5px var(--yellow); }
-    .sdot.high    { background:var(--red);    box-shadow:0 0 5px var(--red); }
-    .sdot.low     { background:var(--orange); box-shadow:0 0 5px var(--orange); }
-    .panel-note { font-size:.79rem; color:var(--text-dim); max-width:260px; line-height:1.6; }
+    .sdot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+    .sdot.good    { background:var(--green);  box-shadow:0 0 4px var(--green); }
+    .sdot.caution { background:var(--yellow); box-shadow:0 0 4px var(--yellow); }
+    .sdot.high    { background:var(--red);    box-shadow:0 0 4px var(--red); }
+    .sdot.low     { background:var(--orange); box-shadow:0 0 4px var(--orange); }
+
+    /* weather cards */
+    .weather-row { display:flex; gap:6px; flex-wrap:wrap; }
+    .weather-card { background:var(--black-4); border:1px solid var(--border); border-radius:10px; padding:8px 10px; text-align:center; flex:1 1 auto; min-width:52px; }
+    .w-day   { font-size:.6rem; font-weight:800; text-transform:uppercase; color:var(--cerulean); margin-bottom:3px; }
+    .w-icon  { font-size:1.4rem; margin-bottom:3px; line-height:1; }
+    .w-hi    { font-size:.82rem; font-weight:800; color:var(--sky); }
+    .w-lo    { font-size:.7rem; color:var(--text-dim); }
+    .w-desc  { font-size:.58rem; color:var(--text-dim); margin-top:3px; line-height:1.3; }
+
+    /* hydrograph */
+    #hydro-wrap { width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+    #hydro-wrap iframe { width:100%; height:250px; border:none; border-radius:8px; background:#000; }
+    .hydro-unavail { font-size:.78rem; color:var(--text-dim); text-align:center; padding:20px; }
 
     @media (max-width:600px) {
       nav { padding:0 16px; }
@@ -206,18 +229,34 @@
   </div>
 
   <div id="data-panel">
-    <div class="panel-inner">
-      <div class="panel-title-row">
-        <div class="panel-title-left">
-          <span class="panel-river-name" id="panel-name"></span>
-          <span class="panel-region" id="panel-region"></span>
-        </div>
-        <button class="close-btn" onclick="closePanel()">✕</button>
-      </div>
-      <div class="stat-cards" id="stat-cards"></div>
-      <div class="panel-right">
+    <!-- Title bar -->
+    <div class="panel-titlebar">
+      <div class="panel-title-left">
+        <span class="panel-river-name" id="panel-name"></span>
+        <span class="panel-region" id="panel-region"></span>
         <div class="status-big" id="status-badge"></div>
+      </div>
+      <button class="close-btn" onclick="closePanel()">✕</button>
+    </div>
+    <!-- Panel body: 3 columns -->
+    <div class="panel-body">
+      <!-- Col 1: Live USGS stats -->
+      <div class="panel-col" id="panel-stats">
+        <div class="panel-col-title">📡 Live Conditions</div>
+        <div class="stat-cards" id="stat-cards">
+          <div class="stat-loading">Loading gauge data…</div>
+        </div>
         <div class="panel-note" id="panel-note"></div>
+      </div>
+      <!-- Col 2: 5-day weather -->
+      <div class="panel-col" id="panel-weather">
+        <div class="panel-col-title">🌤️ 5-Day Forecast</div>
+        <div id="weather-cards"><div class="stat-loading">Loading forecast…</div></div>
+      </div>
+      <!-- Col 3: Hydrograph -->
+      <div class="panel-col panel-col-wide" id="panel-hydro">
+        <div class="panel-col-title">📈 Water Level Trend</div>
+        <div id="hydro-wrap"></div>
       </div>
     </div>
   </div>
@@ -508,22 +547,24 @@
 const RIVER_GEOMETRY = {"Willamette River":{"segments":[[[43.554,-123.258],[43.612,-123.218],[43.693,-123.175],[43.789,-123.143],[43.848,-123.131],[43.951,-123.107],[44.056,-123.092],[44.153,-123.075],[44.232,-123.06],[44.326,-123.044],[44.422,-123.028],[44.508,-123.017],[44.62,-123.003],[44.703,-122.982],[44.792,-122.967],[44.883,-122.957],[44.951,-122.947],[45.014,-122.942],[45.088,-122.929],[45.174,-122.912],[45.265,-122.888],[45.342,-122.858],[45.421,-122.831],[45.487,-122.793],[45.527,-122.768],[45.582,-122.741],[45.638,-122.71],[45.683,-122.675]]]},"Deschutes River":{"segments":[[[43.644,-121.617],[43.71,-121.591],[43.779,-121.564],[43.852,-121.541],[43.923,-121.521],[43.995,-121.504],[44.067,-121.49],[44.148,-121.483],[44.236,-121.474],[44.326,-121.467],[44.415,-121.455],[44.499,-121.444],[44.572,-121.441],[44.643,-121.43],[44.714,-121.418],[44.789,-121.399],[44.858,-121.382],[44.923,-121.367],[44.985,-121.345],[45.046,-121.327],[45.108,-121.313],[45.17,-121.302],[45.232,-121.289],[45.299,-121.279],[45.367,-121.265],[45.43,-121.248],[45.49,-121.228],[45.545,-121.202],[45.598,-121.175],[45.647,-121.145],[45.687,-121.111]]]},"Sandy River":{"segments":[[[45.357,-121.771],[45.369,-121.847],[45.378,-121.918],[45.384,-121.985],[45.389,-122.052],[45.393,-122.119],[45.395,-122.186],[45.395,-122.251],[45.393,-122.314],[45.39,-122.378],[45.385,-122.433],[45.379,-122.49],[45.373,-122.542]]]},"Clackamas River":{"segments":[[[45.198,-121.94],[45.199,-122.003],[45.201,-122.062],[45.202,-122.118],[45.202,-122.178],[45.199,-122.236],[45.193,-122.292],[45.184,-122.345],[45.172,-122.394],[45.16,-122.441],[45.148,-122.488],[45.142,-122.534],[45.148,-122.577],[45.161,-122.611],[45.179,-122.636],[45.198,-122.657],[45.23,-122.667],[45.262,-122.66],[45.298,-122.648],[45.33,-122.63],[45.358,-122.608],[45.382,-122.581]]]},"Rogue River":{"segments":[[[42.432,-122.537],[42.462,-122.603],[42.489,-122.668],[42.513,-122.732],[42.53,-122.801],[42.537,-122.872],[42.533,-122.943],[42.526,-123.014],[42.519,-123.083],[42.51,-123.152],[42.498,-123.219],[42.482,-123.283],[42.465,-123.346],[42.449,-123.409],[42.434,-123.47],[42.419,-123.532],[42.406,-123.591],[42.393,-123.651],[42.381,-123.71],[42.371,-123.772],[42.362,-123.833],[42.352,-123.896],[42.343,-123.96],[42.334,-124.023],[42.325,-124.083],[42.316,-124.14],[42.309,-124.19],[42.299,-124.256],[42.288,-124.32],[42.273,-124.377]]]},"Umpqua River":{"segments":[[[43.634,-122.912],[43.594,-122.975],[43.556,-123.039],[43.522,-123.101],[43.494,-123.163],[43.469,-123.226],[43.447,-123.289],[43.428,-123.351],[43.41,-123.414]],[[43.659,-123.105],[43.629,-123.17],[43.601,-123.234],[43.576,-123.298],[43.553,-123.361],[43.531,-123.423],[43.51,-123.483],[43.49,-123.542],[43.475,-123.601],[43.462,-123.66],[43.45,-123.719],[43.437,-123.778],[43.424,-123.836],[43.412,-123.893],[43.399,-123.948],[43.387,-124.002],[43.374,-124.055],[43.361,-124.108]]]},"John Day River":{"segments":[[[44.749,-119.563],[44.714,-119.665],[44.681,-119.768],[44.65,-119.87],[44.621,-119.971],[44.596,-120.072],[44.575,-120.174],[44.559,-120.275],[44.55,-120.377],[44.548,-120.478],[44.554,-120.577],[44.566,-120.673],[44.582,-120.767],[44.601,-120.858],[44.621,-120.947],[44.645,-121.033],[44.673,-121.116],[44.709,-121.193],[44.748,-121.261],[44.789,-121.316],[44.833,-121.362],[44.883,-121.395],[44.934,-121.409],[44.985,-121.406],[45.037,-121.393],[45.086,-121.373],[45.131,-121.347],[45.177,-121.318],[45.226,-121.291],[45.281,-121.268],[45.338,-121.248],[45.393,-121.224],[45.443,-121.191],[45.488,-121.15],[45.526,-121.101],[45.56,-121.046],[45.59,-120.988],[45.617,-120.929],[45.642,-120.868],[45.663,-120.804]]]},"McKenzie River":{"segments":[[[44.091,-121.93],[44.082,-121.993],[44.074,-122.056],[44.068,-122.118],[44.063,-122.18],[44.059,-122.242],[44.057,-122.304],[44.056,-122.365],[44.057,-122.426],[44.06,-122.487],[44.064,-122.547],[44.069,-122.606],[44.075,-122.664],[44.082,-122.722],[44.089,-122.779],[44.095,-122.835],[44.1,-122.89],[44.103,-122.944],[44.104,-122.997],[44.103,-123.049]]]},"Owyhee River":{"segments":[[[42.068,-117.285],[42.102,-117.248],[42.143,-117.215],[42.185,-117.186],[42.23,-117.161],[42.278,-117.141],[42.327,-117.125],[42.378,-117.113],[42.43,-117.105],[42.482,-117.1],[42.534,-117.098],[42.587,-117.099],[42.639,-117.102],[42.69,-117.108],[42.741,-117.116],[42.791,-117.128],[42.839,-117.142],[42.887,-117.158],[42.934,-117.175],[42.98,-117.193],[43.026,-117.213],[43.07,-117.234],[43.113,-117.257]]]},"Illinois River":{"segments":[[[42.102,-123.497],[42.125,-123.468],[42.152,-123.441],[42.181,-123.417],[42.213,-123.396],[42.247,-123.377],[42.281,-123.358],[42.316,-123.34],[42.35,-123.321],[42.384,-123.3],[42.415,-123.275],[42.444,-123.248],[42.47,-123.218],[42.493,-123.185],[42.511,-123.15],[42.526,-123.112]]]},"Nehalem River":{"segments":[[[45.72,-123.92],[45.709,-123.854],[45.697,-123.788],[45.683,-123.723],[45.669,-123.659],[45.654,-123.596],[45.638,-123.534],[45.621,-123.474],[45.603,-123.415],[45.584,-123.358],[45.564,-123.303],[45.543,-123.25],[45.521,-123.199],[45.498,-123.15],[45.474,-123.103],[45.45,-123.057],[45.427,-123.012],[45.404,-122.968],[45.382,-122.924],[45.361,-122.88],[45.342,-122.836]]]},"Siletz River":{"segments":[[[44.905,-124.0],[44.893,-123.944],[44.882,-123.887],[44.872,-123.83],[44.863,-123.772],[44.856,-123.715],[44.85,-123.657],[44.845,-123.599],[44.841,-123.541],[44.838,-123.483],[44.836,-123.425],[44.835,-123.367],[44.835,-123.309],[44.836,-123.251],[44.838,-123.193],[44.841,-123.135],[44.845,-123.077],[44.85,-123.02]]]},"Coquille River":{"segments":[[[43.177,-124.196],[43.179,-124.13],[43.182,-124.065],[43.186,-123.999],[43.191,-123.934],[43.197,-123.869],[43.205,-123.804],[43.213,-123.74],[43.222,-123.677],[43.233,-123.614],[43.244,-123.552],[43.257,-123.491],[43.27,-123.431],[43.284,-123.372],[43.299,-123.313],[43.314,-123.254],[43.331,-123.196],[43.348,-123.139]]]},"Malheur River":{"segments":[[[43.976,-117.019],[43.942,-117.083],[43.908,-117.147],[43.874,-117.211],[43.84,-117.274],[43.806,-117.337],[43.772,-117.399],[43.738,-117.46],[43.704,-117.521],[43.671,-117.581],[43.639,-117.641],[43.607,-117.701],[43.576,-117.761],[43.546,-117.822],[43.517,-117.883],[43.49,-117.945],[43.464,-118.008],[43.44,-118.072],[43.418,-118.137],[43.398,-118.203],[43.38,-118.27]]]},"Columbia River":{"segments":[[[45.617,-121.175],[45.638,-121.25],[45.651,-121.332],[45.659,-121.415],[45.664,-121.498],[45.667,-121.581],[45.669,-121.664],[45.671,-121.747],[45.672,-121.831],[45.673,-121.914],[45.674,-121.997],[45.675,-122.081],[45.675,-122.165],[45.676,-122.248],[45.676,-122.332],[45.676,-122.415],[45.676,-122.499],[45.675,-122.582],[45.674,-122.665],[45.673,-122.748],[45.671,-122.831],[45.668,-122.913],[45.665,-122.995],[45.661,-123.077],[45.656,-123.159],[45.651,-123.241],[45.645,-123.322],[45.639,-123.403],[45.634,-123.484],[45.63,-123.566],[45.628,-123.648],[45.627,-123.73],[45.626,-123.812],[45.627,-123.894],[45.628,-123.96]]]},"Siuslaw River":{"segments":[[[43.948,-124.104],[43.944,-124.038],[43.94,-123.972],[43.937,-123.906],[43.935,-123.84],[43.933,-123.774],[43.933,-123.708],[43.933,-123.642],[43.934,-123.576],[43.937,-123.51],[43.94,-123.444],[43.944,-123.378],[43.949,-123.313],[43.954,-123.248],[43.96,-123.183],[43.967,-123.119],[43.974,-123.055],[43.982,-122.992]]]},"Yamhill River":{"segments":[[[45.336,-123.193],[45.316,-123.148],[45.296,-123.104],[45.276,-123.06],[45.255,-123.017],[45.234,-122.975],[45.212,-122.933],[45.19,-122.893],[45.167,-122.854],[45.144,-122.816],[45.121,-122.779],[45.098,-122.744],[45.075,-122.71],[45.053,-122.677]]]},"Tualatin River":{"segments":[[[45.385,-122.748],[45.376,-122.791],[45.367,-122.834],[45.358,-122.877],[45.348,-122.919],[45.338,-122.961],[45.327,-123.002],[45.315,-123.043],[45.303,-123.083],[45.29,-123.123],[45.277,-123.162],[45.263,-123.201],[45.249,-123.239],[45.235,-123.277],[45.22,-123.315],[45.205,-123.352],[45.19,-123.389],[45.175,-123.425],[45.161,-123.462],[45.148,-123.499]]]},"Santiam River":{"segments":[[[44.712,-122.849],[44.704,-122.905],[44.698,-122.962],[44.693,-123.019],[44.689,-123.077],[44.686,-123.134],[44.684,-123.192],[44.683,-123.249],[44.683,-123.307],[44.683,-123.363]]]}};
 
 const RIVER_DATA = {
-  "Willamette River":  { region:"Northwest Oregon",     status:"good",    statusLabel:"Prime Fishing", flow:"4,820", level:"5.2", clarity:"Clear",          clarityUnit:"3–4 ft vis", temp:"52", note:"Great steelhead conditions. Flows slightly above average for the season." },
-  "Deschutes River":   { region:"Central Oregon",       status:"caution", statusLabel:"Use Caution",   flow:"3,100", level:"4.8", clarity:"Slightly Turbid", clarityUnit:"1–2 ft vis", temp:"48", note:"Recent rainfall elevated flows. Murky near Maupin. Watch your footing." },
-  "Sandy River":       { region:"NW Oregon / Mt. Hood", status:"high",    statusLabel:"Running High",  flow:"9,400", level:"8.6", clarity:"Turbid",          clarityUnit:"<0.5 ft vis",temp:"44", note:"Heavy snowmelt from Mt. Hood. Not recommended for wading." },
-  "Clackamas River":   { region:"NW Oregon",            status:"good",    statusLabel:"Prime Fishing", flow:"2,650", level:"4.1", clarity:"Clear",          clarityUnit:"4+ ft vis",  temp:"50", note:"Excellent conditions near Estacada. Chinook active in lower reaches." },
-  "Rogue River":       { region:"Southern Oregon",      status:"good",    statusLabel:"Prime Fishing", flow:"3,800", level:"4.5", clarity:"Clear",          clarityUnit:"3–5 ft vis", temp:"55", note:"World-class steelhead fishing. Gold Beach section particularly productive." },
-  "Umpqua River":      { region:"Southern Oregon",      status:"caution", statusLabel:"Use Caution",   flow:"5,200", level:"6.1", clarity:"Slightly Turbid",clarityUnit:"1.5 ft vis", temp:"53", note:"North Umpqua clearing. South fork still elevated after weekend rain." },
-  "John Day River":    { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   flow:"820",   level:"2.1", clarity:"Clear",          clarityUnit:"5+ ft vis",  temp:"58", note:"Unusually low for the season. Warm-water species only. Check regs." },
-  "McKenzie River":    { region:"Central Oregon",       status:"good",    statusLabel:"Prime Fishing", flow:"1,950", level:"3.8", clarity:"Crystal Clear",  clarityUnit:"5+ ft vis",  temp:"46", note:"Spring Chinook beginning their run. Legendary clarity." },
-  "Owyhee River":      { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   flow:"340",   level:"1.6", clarity:"Clear",          clarityUnit:"4+ ft vis",  temp:"62", note:"Low reservoir releases. Canyon section great for dry-fly trout." },
-  "Illinois River":    { region:"SW Oregon",            status:"good",    statusLabel:"Prime Fishing", flow:"1,200", level:"3.2", clarity:"Clear",          clarityUnit:"3 ft vis",   temp:"57", note:"Remote wild steelhead river. Walk-in access only for most reaches." },
-  "Nehalem River":     { region:"NW Oregon Coast",      status:"caution", statusLabel:"Use Caution",   flow:"2,800", level:"5.5", clarity:"Slightly Turbid",clarityUnit:"1–2 ft vis", temp:"49", note:"Winter steelhead present. Flows fluctuating with coastal weather." },
-  "Siletz River":      { region:"Oregon Coast",         status:"good",    statusLabel:"Prime Fishing", flow:"1,600", level:"3.9", clarity:"Clear",          clarityUnit:"2–3 ft vis", temp:"51", note:"Good winter steelhead run underway. Access at Siletz Gorge recommended." },
-  "Coquille River":    { region:"Southern Coast",       status:"good",    statusLabel:"Prime Fishing", flow:"2,100", level:"4.2", clarity:"Clear",          clarityUnit:"2–4 ft vis", temp:"54", note:"Excellent cutthroat trout fishing in upper forks." },
-  "Powder River":      { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   flow:"290",   level:"1.4", clarity:"Clear",          clarityUnit:"4+ ft vis",  temp:"60", note:"Low flows typical for season. Reservoir drawdown affecting levels." },
-  "Malheur River":     { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   flow:"410",   level:"1.8", clarity:"Clear",          clarityUnit:"3+ ft vis",  temp:"59", note:"Dry year impacting flows. Best fishing near headwaters." },
+  "Willamette River":  { region:"Northwest Oregon",     status:"good",    statusLabel:"Prime Fishing", note:"Great steelhead conditions. Flows slightly above average for the season.",         lat:45.52, lon:-122.67, usgsId:"14211720", nwrfcId:"PDXO3" },
+  "Deschutes River":   { region:"Central Oregon",       status:"caution", statusLabel:"Use Caution",   note:"Recent rainfall elevated flows. Murky near Maupin. Watch your footing.",           lat:45.10, lon:-121.30, usgsId:"14092500", nwrfcId:"MODO3" },
+  "Sandy River":       { region:"NW Oregon / Mt. Hood", status:"high",    statusLabel:"Running High",  note:"Heavy snowmelt from Mt. Hood. Not recommended for wading.",                        lat:45.44, lon:-122.25, usgsId:"14142500", nwrfcId:"SNDO3" },
+  "Clackamas River":   { region:"NW Oregon",            status:"good",    statusLabel:"Prime Fishing", note:"Excellent conditions near Estacada. Chinook active in lower reaches.",             lat:45.29, lon:-122.33, usgsId:"14210000", nwrfcId:"ESTO3" },
+  "Rogue River":       { region:"Southern Oregon",      status:"good",    statusLabel:"Prime Fishing", note:"World-class steelhead fishing. Gold Beach section particularly productive.",        lat:42.44, lon:-123.33, usgsId:"14361500", nwrfcId:"GRPO3" },
+  "Umpqua River":      { region:"Southern Oregon",      status:"caution", statusLabel:"Use Caution",   note:"North Umpqua clearing. South fork still elevated after weekend rain.",              lat:43.12, lon:-123.65, usgsId:"14323500", nwrfcId:"RSDO3" },
+  "John Day River":    { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   note:"Unusually low for the season. Warm-water species only. Check regs.",               lat:44.75, lon:-120.20, usgsId:"14048000", nwrfcId:"SERO3" },
+  "McKenzie River":    { region:"Central Oregon",       status:"good",    statusLabel:"Prime Fishing", note:"Spring Chinook beginning their run. Legendary clarity.",                           lat:44.13, lon:-122.47, usgsId:"14162500", nwrfcId:"VIDO3" },
+  "Owyhee River":      { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   note:"Low reservoir releases. Canyon section great for dry-fly trout.",                  lat:43.07, lon:-117.17, usgsId:"13181000", nwrfcId:"ROOO3" },
+  "Illinois River":    { region:"SW Oregon",            status:"good",    statusLabel:"Prime Fishing", note:"Remote wild steelhead river. Walk-in access only for most reaches.",               lat:42.31, lon:-123.32, usgsId:"14377100", nwrfcId:"CAVO3" },
+  "Nehalem River":     { region:"NW Oregon Coast",      status:"caution", statusLabel:"Use Caution",   note:"Winter steelhead present. Flows fluctuating with coastal weather.",                lat:45.68, lon:-123.60, usgsId:"14301000", nwrfcId:"FOSO3" },
+  "Siletz River":      { region:"Oregon Coast",         status:"good",    statusLabel:"Prime Fishing", note:"Good winter steelhead run underway. Access at Siletz Gorge recommended.",          lat:44.85, lon:-123.70, usgsId:"14305500", nwrfcId:"SLZO3" },
+  "Coquille River":    { region:"Southern Coast",       status:"good",    statusLabel:"Prime Fishing", note:"Excellent cutthroat trout fishing in upper forks.",                                lat:43.18, lon:-124.00, usgsId:"14348000", nwrfcId:"COQO3" },
+  "Powder River":      { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   note:"Low flows typical for season. Reservoir drawdown affecting levels.",               lat:44.80, lon:-117.80, usgsId:"13269000", nwrfcId:null },
+  "Malheur River":     { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   note:"Dry year impacting flows. Best fishing near headwaters.",                          lat:43.98, lon:-117.70, usgsId:"13213000", nwrfcId:null },
 };
+
+const STATUS_COLORS
 
 const STATUS_COLORS = { good:'#3DDC84', caution:'#FFD93D', high:'#FF4D6D', low:'#FF7B2E' };
 const DEFAULT_COLOR = '#2A9FD6';
@@ -627,21 +668,110 @@ async function loadRivers() {
   document.getElementById('map-hint').classList.remove('hidden');
 }
 
-function showPanel(name, r) {
+// ── NWS weather icon mapping ────────────────────────────────────────────────
+function nwsIcon(shortForecast) {
+  const f = shortForecast.toLowerCase();
+  if (f.includes('thunder')) return '⛈️';
+  if (f.includes('snow') || f.includes('blizzard')) return '❄️';
+  if (f.includes('rain') || f.includes('shower') || f.includes('drizzle')) return '🌧️';
+  if (f.includes('partly') || f.includes('mostly cloudy')) return '⛅';
+  if (f.includes('cloudy') || f.includes('overcast')) return '☁️';
+  if (f.includes('fog') || f.includes('haze')) return '🌫️';
+  if (f.includes('wind')) return '💨';
+  if (f.includes('sunny') || f.includes('clear')) return '☀️';
+  return '🌤️';
+}
+
+// ── USGS live data ────────────────────────────────────────────────────────────
+async function fetchUSGS(siteId) {
+  try {
+    const url = `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${siteId}&parameterCd=00060,00065,00010&siteStatus=active`;
+    const res = await fetch(url);
+    const json = await res.json();
+    const series = json.value.timeSeries;
+    const result = {};
+    series.forEach(s => {
+      const code = s.variable.variableCode[0].value;
+      const val  = s.values[0]?.value[0]?.value;
+      if (code === '00060') result.flow  = val ? parseFloat(val).toLocaleString() : null;
+      if (code === '00065') result.level = val ? parseFloat(val).toFixed(2) : null;
+      if (code === '00010') result.temp  = val ? (parseFloat(val) * 9/5 + 32).toFixed(1) : null;
+    });
+    return result;
+  } catch(e) { return {}; }
+}
+
+// ── NWS 5-day weather ─────────────────────────────────────────────────────────
+async function fetchWeather(lat, lon) {
+  try {
+    const ptRes  = await fetch(`https://api.weather.gov/points/${lat},${lon}`);
+    const ptJson = await ptRes.json();
+    const fRes   = await fetch(ptJson.properties.forecast);
+    const fJson  = await fRes.json();
+    return fJson.properties.periods.slice(0, 10); // day + night pairs
+  } catch(e) { return []; }
+}
+
+// ── SHOW PANEL ────────────────────────────────────────────────────────────────
+async async function showPanel(name, r) {
   document.getElementById('map-hint').classList.add('hidden');
   document.getElementById('panel-name').textContent   = name;
   document.getElementById('panel-region').textContent = r.region;
   document.getElementById('panel-note').textContent   = r.note;
+
   const badge = document.getElementById('status-badge');
   badge.className = `status-big ${r.status}`;
   badge.innerHTML = `<div class="sdot ${r.status}"></div>${r.statusLabel}`;
-  document.getElementById('stat-cards').innerHTML = [
-    { icon:'💧', label:'Flow Rate',   value:r.flow,    unit:'cfs' },
-    { icon:'📏', label:'Water Level', value:r.level,   unit:'ft'  },
-    { icon:'👁️', label:'Clarity',     value:r.clarity, unit:r.clarityUnit },
-    { icon:'🌡️', label:'Water Temp',  value:r.temp,    unit:'°F'  },
-  ].map(s=>`<div class="stat-card"><div class="stat-icon">${s.icon}</div><div class="stat-label">${s.label}</div><div class="stat-value">${s.value} <span class="stat-unit">${s.unit}</span></div></div>`).join('');
+
   document.getElementById('data-panel').classList.add('open');
+
+  // Reset columns to loading state
+  document.getElementById('stat-cards').innerHTML   = '<div class="stat-loading">⏳ Fetching live data…</div>';
+  document.getElementById('weather-cards').innerHTML = '<div class="stat-loading">⏳ Fetching forecast…</div>';
+  document.getElementById('hydro-wrap').innerHTML    = '<div class="stat-loading">⏳ Loading chart…</div>';
+
+  // ── Fetch USGS live data ──
+  const usgs = await fetchUSGS(r.usgsId);
+  const stats = [
+    { label:'Flow Rate',   value: usgs.flow  || '—', unit:'cfs' },
+    { label:'Water Level', value: usgs.level || '—', unit:'ft'  },
+    { label:'Water Temp',  value: usgs.temp  || '—', unit:'°F'  },
+  ];
+  document.getElementById('stat-cards').innerHTML = stats.map(s => `
+    <div class="stat-card">
+      <div class="stat-label">${s.label}</div>
+      <div class="stat-value">${s.value} <span class="stat-unit">${s.unit}</span></div>
+    </div>`).join('') +
+    `<div class="panel-note">${r.note}</div>`;
+
+  // ── Fetch NWS 5-day forecast ──
+  const periods = await fetchWeather(r.lat, r.lon);
+  if (periods.length > 0) {
+    // Take daytime periods only (isDaytime=true), up to 5
+    const days = periods.filter(p => p.isDaytime).slice(0, 5);
+    document.getElementById('weather-cards').innerHTML =
+      '<div class="weather-row">' +
+      days.map(p => `
+        <div class="weather-card">
+          <div class="w-day">${p.name.replace('This ', '').substring(0,3)}</div>
+          <div class="w-icon">${nwsIcon(p.shortForecast)}</div>
+          <div class="w-hi">${p.temperature}°${p.temperatureUnit}</div>
+          <div class="w-desc">${p.shortForecast.substring(0,18)}</div>
+        </div>`).join('') +
+      '</div>';
+  } else {
+    document.getElementById('weather-cards').innerHTML = '<div class="stat-loading">Forecast unavailable</div>';
+  }
+
+  // ── Hydrograph embed ──
+  if (r.nwrfcId) {
+    const src = `https://www.nwrfc.noaa.gov/station/flowplot/hydroPlot.php?id=${r.nwrfcId}&pe=HG&v=${Date.now()}`;
+    document.getElementById('hydro-wrap').innerHTML =
+      `<iframe src="${src}" scrolling="no" title="Water level trend for ${name}"></iframe>`;
+  } else {
+    document.getElementById('hydro-wrap').innerHTML =
+      `<div class="hydro-unavail">Hydrograph not available for this gauge.</div>`;
+  }
 }
 
 function closePanel() {
