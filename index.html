@@ -761,15 +761,31 @@ async function showPanel(name, r) {
     document.getElementById('weather-cards').innerHTML = '<div class="stat-loading">Forecast unavailable</div>';
   }
 
-  // ── Hydrograph embed ──
-  if (r.nwrfcId) {
-    const src = `https://www.nwrfc.noaa.gov/station/flowplot/hydroPlot.php?id=${r.nwrfcId}&pe=HG&v=${Date.now()}`;
-    document.getElementById('hydro-wrap').innerHTML =
-      `<iframe src="${src}" scrolling="no" title="Water level trend for ${name}"></iframe>`;
-  } else {
-    document.getElementById('hydro-wrap').innerHTML =
-      `<div class="hydro-unavail">Hydrograph not available for this gauge.</div>`;
-  }
+  // ── USGS chart embed + external links ──
+  const usgsChartSrc = `https://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no=${r.usgsId}&parm_cd=00065&period=7&format=gif_default`;
+  const usgsPageUrl  = `https://waterdata.usgs.gov/monitoring-location/${r.usgsId}/`;
+  const nwrfcUrl     = r.nwrfcId ? `https://www.nwrfc.noaa.gov/station/flowplot/hydroPlot.php?id=${r.nwrfcId}&pe=HG` : null;
+
+  document.getElementById('hydro-wrap').innerHTML = `
+    <div style="display:flex;flex-direction:column;height:100%;gap:10px;padding:4px 0;">
+      <img src="${usgsChartSrc}"
+        style="width:100%;border-radius:8px;border:1px solid rgba(42,159,214,.15);background:#0d0d0d;"
+        alt="7-day water level chart"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+      <div style="display:none;font-size:.75rem;color:var(--text-dim);text-align:center;padding:12px;">Chart unavailable for this gauge</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <a href="${usgsPageUrl}" target="_blank" rel="noopener"
+          style="flex:1;text-align:center;padding:7px 10px;border-radius:8px;border:1px solid rgba(42,159,214,.25);background:rgba(42,159,214,.07);color:var(--sky);font-size:.72rem;font-weight:800;text-decoration:none;transition:border-color .2s;"
+          onmouseover="this.style.borderColor='var(--cerulean)'" onmouseout="this.style.borderColor='rgba(42,159,214,.25)'">
+          📊 USGS Gauge Page ↗
+        </a>
+        ${nwrfcUrl ? `<a href="${nwrfcUrl}" target="_blank" rel="noopener"
+          style="flex:1;text-align:center;padding:7px 10px;border-radius:8px;border:1px solid rgba(42,159,214,.25);background:rgba(42,159,214,.07);color:var(--sky);font-size:.72rem;font-weight:800;text-decoration:none;transition:border-color .2s;"
+          onmouseover="this.style.borderColor='var(--cerulean)'" onmouseout="this.style.borderColor='rgba(42,159,214,.25)'">
+          📈 NOAA Hydrograph ↗
+        </a>` : ''}
+      </div>
+    </div>`;
 }
 
 function closePanel() {
