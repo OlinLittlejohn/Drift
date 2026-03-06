@@ -176,7 +176,7 @@
   <div class="nav-right">
     <div class="nav-links">
       <a class="nav-link active" href="#" onclick="showTab(event,'map')">🗺️ River Map</a>
-      <a class="nav-link" href="#" onclick="showTab(event,'report')">📋 Fishing Report</a>
+      <a class="nav-link nav-link-ext" href="https://myodfw.com/recreation-report/fishing-report" target="_blank" rel="noopener">📋 Fishing Report ↗</a>
       <a class="nav-link" href="#" onclick="showTab(event,'species')">🐟 Species</a>
       <a class="nav-link nav-link-ext" href="https://www.eregulations.com/oregon/fishing" target="_blank" rel="noopener">📖 Regulations ↗</a>
     </div>
@@ -224,20 +224,6 @@
 </div>
 
 </div><!-- end tab-map -->
-
-<!-- FISHING REPORT TAB -->
-<div id="tab-report" class="tab-panel" style="display:none;position:fixed;top:58px;left:0;right:0;bottom:0;flex-direction:column;align-items:center;justify-content:center;background:var(--black);gap:24px;">
-  <div style="text-align:center;max-width:480px;padding:40px 24px;">
-    <div style="font-size:3rem;margin-bottom:16px;">📋</div>
-    <h2 style="font-family:'Righteous',cursive;font-size:1.8rem;color:var(--sky);margin-bottom:12px;">Fishing Report</h2>
-    <p style="color:var(--text-dim);line-height:1.7;margin-bottom:32px;">Up-to-date fishing reports for Oregon rivers, lakes, and coastal waters — provided by the Oregon Department of Fish & Wildlife.</p>
-    <a href="https://myodfw.com/recreation-report/fishing-report" target="_blank" rel="noopener"
-      style="display:inline-flex;align-items:center;gap:10px;background:var(--cerulean);color:#000;font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;padding:14px 28px;border-radius:50px;text-decoration:none;transition:background .2s;box-shadow:0 4px 24px rgba(42,159,214,.3);"
-      onmouseover="this.style.background='#6EC6E6'" onmouseout="this.style.background='var(--cerulean)'">
-      View ODFW Fishing Report ↗
-    </a>
-  </div>
-</div>
 
 <!-- SPECIES TAB -->
 <div id="tab-species" class="tab-panel" style="display:none;position:fixed;top:58px;left:0;right:0;bottom:0;overflow-y:auto;background:var(--black);padding:40px 24px;">
