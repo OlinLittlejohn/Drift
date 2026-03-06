@@ -564,8 +564,6 @@ const RIVER_DATA = {
   "Malheur River":     { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   note:"Dry year impacting flows. Best fishing near headwaters.",                          lat:43.98, lon:-117.70, usgsId:"13213000", nwrfcId:null },
 };
 
-const STATUS_COLORS
-
 const STATUS_COLORS = { good:'#3DDC84', caution:'#FFD93D', high:'#FF4D6D', low:'#FF7B2E' };
 const DEFAULT_COLOR = '#2A9FD6';
 
@@ -713,7 +711,7 @@ async function fetchWeather(lat, lon) {
 }
 
 // ── SHOW PANEL ────────────────────────────────────────────────────────────────
-async async function showPanel(name, r) {
+async function showPanel(name, r) {
   document.getElementById('map-hint').classList.add('hidden');
   document.getElementById('panel-name').textContent   = name;
   document.getElementById('panel-region').textContent = r.region;
