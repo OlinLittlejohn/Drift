@@ -602,54 +602,10 @@ function drawFromOSM(elements) {
   Object.entries(byName).forEach(([name, segments]) => drawSegments(name, segments));
 }
 
-async function loadRivers() {
-  const loading = document.getElementById('loading');
-  const setStatus = t => document.getElementById('load-status').textContent = t;
-
-  const riverNames = Object.keys(RIVER_DATA);
-  const bbox = "41.9,-124.7,46.3,-116.4";
-
-  const batchSize = 5;
-  const batches = [];
-  for (let i = 0; i < riverNames.length; i += batchSize) {
-    batches.push(riverNames.slice(i, i + batchSize));
-  }
-
-  setStatus(`Loading rivers… (1/${batches.length})`);
-  let allElements = [];
-  let anySuccess = false;
-
-  for (let i = 0; i < batches.length; i++) {
-    const batch = batches[i];
-    setStatus(`Loading rivers… (${i+1}/${batches.length})`);
-    const filters = batch.map(n => `way["waterway"="river"]["name"="${n}"](${bbox});`).join('');
-    const query = '[out:json][timeout:30];(' + filters + ');out geom;';
-    try {
-      const res = await fetch('https://overpass-api.de/api/interpreter', {
-        method:'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: 'data=' + encodeURIComponent(query)
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const json = await res.json();
-      console.log(`Batch ${i+1}: ${json.elements.length} elements`);
-      allElements = allElements.concat(json.elements);
-      anySuccess = true;
-    } catch(err) {
-      console.warn(`Batch ${i+1} failed:`, err.message);
-    }
-  }
-
-  if (anySuccess && allElements.length > 0) {
-    console.log(`Total OSM elements: ${allElements.length}`);
-    drawFromOSM(allElements);
-  } else {
-    console.warn('All batches failed, using baked coords');
-    drawFromBaked();
-  }
-
-  loading.classList.add('done');
-  setTimeout(() => loading.style.display='none', 400);
+function loadRivers() {
+  drawFromBaked();
+  document.getElementById('loading').classList.add('done');
+  setTimeout(() => document.getElementById('loading').style.display='none', 400);
   document.getElementById('map-hint').classList.remove('hidden');
 }
 
