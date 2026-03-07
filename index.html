@@ -549,11 +549,11 @@ const RIVER_DATA = {
   "Illinois River":    { region:"SW Oregon",            status:"good",    statusLabel:"Prime Fishing", note:"Remote wild steelhead river. Walk-in access only for most reaches.",               lat:42.31, lon:-123.32, usgsId:"14377100", nwrfcId:"CAVO3", city:"Cave Junction, OR" },
   "Nehalem River":     { region:"NW Oregon Coast",      status:"caution", statusLabel:"Use Caution",   note:"Winter steelhead present. Flows fluctuating with coastal weather.",                lat:45.68, lon:-123.60, usgsId:"14301000", nwrfcId:"FOSO3", city:"Tillamook, OR" },
   "Siletz River":      { region:"Oregon Coast",         status:"good",    statusLabel:"Prime Fishing", note:"Good winter steelhead run underway. Access at Siletz Gorge recommended.",          lat:44.85, lon:-123.70, usgsId:"14305500", nwrfcId:"SLZO3", city:"Lincoln City, OR" },
-  "Coquille River":    { region:"Southern Coast",       status:"good",    statusLabel:"Prime Fishing", note:"Excellent cutthroat trout fishing in upper forks.",                                lat:43.18, lon:-124.00, usgsId:"14348000", nwrfcId:"COQO3", city:"Coquille, OR" },
-  "Powder River":      { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   note:"Low flows typical for season. Reservoir drawdown affecting levels.",               lat:44.80, lon:-117.80, usgsId:"13269000", nwrfcId:null,     city:"Baker City, OR" },
-  "Malheur River":     { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   note:"Dry year impacting flows. Best fishing near headwaters.",                          lat:43.98, lon:-117.70, usgsId:"13213000", nwrfcId:null,     city:"Vale, OR" },
+  "Coquille River":    { region:"Southern Coast",       status:"good",    statusLabel:"Prime Fishing", note:"Excellent cutthroat trout fishing in upper forks.",                                lat:43.18, lon:-124.00, usgsId:"14327055", nwrfcId:"COQO3", city:"Coquille, OR" },
+  "Powder River":      { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   note:"Low flows typical for season. Reservoir drawdown affecting levels.",               lat:44.80, lon:-117.80, usgsId:"13277000", nwrfcId:null,     city:"Baker City, OR" },
+  "Malheur River":     { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   note:"Dry year impacting flows. Best fishing near headwaters.",                          lat:43.98, lon:-117.70, usgsId:"13233300", nwrfcId:null,     city:"Vale, OR" },
   "Columbia River":    { region:"North Oregon Border",   status:"good",    statusLabel:"Prime Fishing", note:"Year-round fishery for Chinook, steelhead, walleye and sturgeon.",                lat:45.67, lon:-122.40, usgsId:"14144700", nwrfcId:"BONO3",  city:"Bonneville, OR" },
-  "Snake River":       { region:"Eastern Oregon Border", status:"good",    statusLabel:"Prime Fishing", note:"Excellent steelhead and sturgeon fishing in Hells Canyon reach.",                  lat:45.85, lon:-116.97, usgsId:"13334700", nwrfcId:null,     city:"Lewiston, ID" },
+  "Snake River":       { region:"Eastern Oregon Border", status:"good",    statusLabel:"Prime Fishing", note:"Excellent steelhead and sturgeon fishing in Hells Canyon reach.",                  lat:45.85, lon:-116.97, usgsId:"13290450", nwrfcId:null,     city:"Lewiston, ID" },
 };
 
 const STATUS_COLORS = { good:'#2A9FD6', caution:'#2A9FD6', high:'#2A9FD6', low:'#2A9FD6' };
@@ -603,6 +603,11 @@ function drawFromOSM(elements) {
 }
 
 function loadRivers() {
+  if (typeof RIVER_GEOMETRY === 'undefined') {
+    console.error('RIVER_GEOMETRY not loaded — check RIVER_GEOMETRY.js is in the same folder');
+    document.getElementById('load-status').textContent = 'Error: RIVER_GEOMETRY.js not found';
+    return;
+  }
   drawFromBaked();
   document.getElementById('loading').classList.add('done');
   setTimeout(() => document.getElementById('loading').style.display='none', 400);
