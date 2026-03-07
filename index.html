@@ -606,12 +606,12 @@ function drawFromOSM(elements) {
 }
 
 function setStatus(msg) {
-  const el = document.getElementById('loading-text');
+  const el = document.getElementById('load-status');
   if (el) el.textContent = msg;
 }
 
 async function loadRivers() {
-  const loading = document.getElementById('loading-overlay');
+  const loading = document.getElementById('loading');
   const riverNames = Object.keys(RIVER_DATA);
   const bbox = "41.9,-124.7,46.3,-116.4";
   const batchSize = 5;
@@ -797,7 +797,7 @@ function showTab(e, tab) {
   document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
   document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
   document.getElementById('tab-' + tab).style.display = tab === 'map' ? 'flex' : 'block';
-  e.target.classList.add('active');
+  e.currentTarget.classList.add('active');
 }
 
 loadRivers();
