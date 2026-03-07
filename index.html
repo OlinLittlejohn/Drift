@@ -535,7 +535,7 @@ const RIVER_DATA = {
   "Sandy River":       { region:"NW Oregon / Mt. Hood", status:"high",    statusLabel:"Running High",  note:"Heavy snowmelt from Mt. Hood. Not recommended for wading.",                        lat:45.44, lon:-122.25, usgsId:"14142500", nwrfcId:"SNDO3", city:"Sandy, OR" },
   "Clackamas River":   { region:"NW Oregon",            status:"good",    statusLabel:"Prime Fishing", note:"Excellent conditions near Estacada. Chinook active in lower reaches.",             lat:45.29, lon:-122.33, usgsId:"14210000", nwrfcId:"ESTO3", city:"Estacada, OR" },
   "Rogue River":       { region:"Southern Oregon",      status:"good",    statusLabel:"Prime Fishing", note:"World-class steelhead fishing. Gold Beach section particularly productive.",        lat:42.44, lon:-123.33, usgsId:"14361500", nwrfcId:"GRPO3", city:"Grants Pass, OR" },
-  "Umpqua River":      { region:"Southern Oregon",      status:"caution", statusLabel:"Use Caution",   note:"North Umpqua clearing. South fork still elevated after weekend rain.",              lat:43.12, lon:-123.65, usgsId:"14323500", nwrfcId:"RSDO3", city:"Roseburg, OR" },
+  "Umpqua River":      { region:"Southern Oregon",      status:"caution", statusLabel:"Use Caution",   note:"North Umpqua clearing. South fork still elevated after weekend rain.",              lat:43.12, lon:-123.65, usgsId:"14321000", nwrfcId:"RSDO3", city:"Roseburg, OR" },
   "John Day River":    { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   note:"Unusually low for the season. Warm-water species only. Check regs.",               lat:44.75, lon:-120.20, usgsId:"14048000", nwrfcId:"SERO3", city:"Fossil, OR" },
   "McKenzie River":    { region:"Central Oregon",       status:"good",    statusLabel:"Prime Fishing", note:"Spring Chinook beginning their run. Legendary clarity.",                           lat:44.13, lon:-122.47, usgsId:"14162500", nwrfcId:"VIDO3", city:"Springfield, OR" },
   "Owyhee River":      { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   note:"Low reservoir releases. Canyon section great for dry-fly trout.",                  lat:43.07, lon:-117.17, usgsId:"13181000", nwrfcId:"ROOO3", city:"Vale, OR" },
@@ -684,21 +684,23 @@ function nwsSimple(shortForecast, tempF) {
 
 // ── USGS live data ────────────────────────────────────────────────────────────
 async function fetchUSGS(siteId) {
+  const result = {};
+  // Fetch flow and temp separately so one missing param doesn't break the other
   try {
-    const url = `https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${siteId}&parameterCd=00060,00065,00010&siteStatus=active`;
-    const res = await fetch(url);
-    const json = await res.json();
-    const series = json.value.timeSeries;
-    const result = {};
-    series.forEach(s => {
-      const code = s.variable.variableCode[0].value;
-      const val  = s.values[0]?.value[0]?.value;
-      if (code === '00060') result.flow  = val ? parseFloat(val).toLocaleString() : null;
-      if (code === '00065') result.level = val ? parseFloat(val).toFixed(2) : null;
-      if (code === '00010') result.temp  = val ? (parseFloat(val) * 9/5 + 32).toFixed(1) : null;
-    });
-    return result;
-  } catch(e) { return {}; }
+    const flowRes  = await fetch(`https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${siteId}&parameterCd=00060&siteStatus=active`);
+    const flowJson = await flowRes.json();
+    const flowSeries = flowJson?.value?.timeSeries?.[0];
+    const flowVal = flowSeries?.values?.[0]?.value?.[0]?.value;
+    if (flowVal) result.flow = parseFloat(flowVal).toLocaleString();
+  } catch(e) {}
+  try {
+    const tempRes  = await fetch(`https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${siteId}&parameterCd=00010&siteStatus=active`);
+    const tempJson = await tempRes.json();
+    const tempSeries = tempJson?.value?.timeSeries?.[0];
+    const tempVal = tempSeries?.values?.[0]?.value?.[0]?.value;
+    if (tempVal) result.temp = (parseFloat(tempVal) * 9/5 + 32).toFixed(1);
+  } catch(e) {}
+  return result;
 }
 
 // ── NWS 5-day weather ─────────────────────────────────────────────────────────
