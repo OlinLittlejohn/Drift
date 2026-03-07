@@ -550,10 +550,10 @@ const RIVER_DATA = {
   "Nehalem River":     { region:"NW Oregon Coast",      status:"caution", statusLabel:"Use Caution",   note:"Winter steelhead present. Flows fluctuating with coastal weather.",                lat:45.68, lon:-123.60, usgsId:"14301000", nwrfcId:"FOSO3", city:"Tillamook, OR" },
   "Siletz River":      { region:"Oregon Coast",         status:"good",    statusLabel:"Prime Fishing", note:"Good winter steelhead run underway. Access at Siletz Gorge recommended.",          lat:44.85, lon:-123.70, usgsId:"14305500", nwrfcId:"SLZO3", city:"Lincoln City, OR" },
   "Coquille River":    { region:"Southern Coast",       status:"good",    statusLabel:"Prime Fishing", note:"Excellent cutthroat trout fishing in upper forks.",                                lat:43.18, lon:-124.00, usgsId:"14327055", nwrfcId:"COQO3", city:"Coquille, OR" },
-  "Powder River":      { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   note:"Low flows typical for season. Reservoir drawdown affecting levels.",               lat:44.80, lon:-117.80, usgsId:"13277000", nwrfcId:null,     city:"Baker City, OR" },
+  "Powder River":      { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   note:"Low flows typical for season. Reservoir drawdown affecting levels.",               lat:44.80, lon:-117.80, usgsId:null,        nwrfcId:null,     city:"Baker City, OR", noGauge:true },
   "Malheur River":     { region:"Eastern Oregon",       status:"low",     statusLabel:"Running Low",   note:"Dry year impacting flows. Best fishing near headwaters.",                          lat:43.98, lon:-117.70, usgsId:"13233300", nwrfcId:null,     city:"Vale, OR" },
   "Columbia River":    { region:"North Oregon Border",   status:"good",    statusLabel:"Prime Fishing", note:"Year-round fishery for Chinook, steelhead, walleye and sturgeon.",                lat:45.67, lon:-122.40, usgsId:"14144700", nwrfcId:"BONO3",  city:"Bonneville, OR" },
-  "Snake River":       { region:"Eastern Oregon Border", status:"good",    statusLabel:"Prime Fishing", note:"Excellent steelhead and sturgeon fishing in Hells Canyon reach.",                  lat:45.85, lon:-116.97, usgsId:"13290450", nwrfcId:null,     city:"Lewiston, ID" },
+  "Snake River":       { region:"Eastern Oregon Border", status:"good",    statusLabel:"Prime Fishing", note:"Excellent steelhead and sturgeon fishing in Hells Canyon reach.",                  lat:45.85, lon:-116.97, usgsId:"13269000", nwrfcId:null,     city:"Lewiston, ID" },
 };
 
 const STATUS_COLORS = { good:'#2A9FD6', caution:'#2A9FD6', high:'#2A9FD6', low:'#2A9FD6' };
@@ -650,21 +650,27 @@ function nwsSimple(shortForecast, tempF) {
 // ── USGS live data ────────────────────────────────────────────────────────────
 async function fetchUSGS(siteId) {
   const result = {};
-  // Fetch flow and temp separately so one missing param doesn't break the other
-  try {
-    const flowRes  = await fetch(`https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${siteId}&parameterCd=00060&siteStatus=active`);
-    const flowJson = await flowRes.json();
-    const flowSeries = flowJson?.value?.timeSeries?.[0];
-    const flowVal = flowSeries?.values?.[0]?.value?.[0]?.value;
-    if (flowVal) result.flow = parseFloat(flowVal).toLocaleString();
-  } catch(e) {}
-  try {
-    const tempRes  = await fetch(`https://waterservices.usgs.gov/nwis/iv/?format=json&sites=${siteId}&parameterCd=00010&siteStatus=active`);
-    const tempJson = await tempRes.json();
-    const tempSeries = tempJson?.value?.timeSeries?.[0];
-    const tempVal = tempSeries?.values?.[0]?.value?.[0]?.value;
-    if (tempVal) result.temp = (parseFloat(tempVal) * 9/5 + 32).toFixed(1);
-  } catch(e) {}
+
+  async function getParam(paramCd) {
+    // Try instantaneous values first, fall back to daily values
+    for (const service of ['iv', 'dv']) {
+      try {
+        const res = await fetch(`https://waterservices.usgs.gov/nwis/${service}/?format=json&sites=${siteId}&parameterCd=${paramCd}&siteStatus=all`);
+        if (!res.ok) continue;
+        const json = await res.json();
+        const val = json?.value?.timeSeries?.[0]?.values?.[0]?.value?.[0]?.value;
+        if (val && val !== '-999999') return val;
+      } catch(e) {}
+    }
+    return null;
+  }
+
+  const flowVal = await getParam('00060');
+  if (flowVal) result.flow = parseFloat(flowVal).toLocaleString();
+
+  const tempVal = await getParam('00010');
+  if (tempVal) result.temp = (parseFloat(tempVal) * 9/5 + 32).toFixed(1);
+
   return result;
 }
 
@@ -689,23 +695,31 @@ async function showPanel(name, r) {
   document.getElementById('data-panel').classList.add('open');
 
   // Reset columns to loading state
-  document.getElementById('stat-cards').innerHTML   = '<div class="stat-loading">⏳ Fetching live data…</div>';
   document.getElementById('weather-title').textContent = `🌤️ Forecast — ${r.city}`;
   document.getElementById('weather-cards').innerHTML = '<div class="stat-loading">⏳ Fetching forecast…</div>';
-  document.getElementById('hydro-wrap').innerHTML    = '<div class="stat-loading">⏳ Loading chart…</div>';
+
+  // ── Live conditions: skip if no gauge ──
+  if (r.noGauge) {
+    document.getElementById('stat-cards').innerHTML = '<div class="stat-loading">No active USGS gauge for this river.</div>';
+    document.getElementById('hydro-wrap').innerHTML = '<div class="hydro-unavail">📭 No active USGS gauge available for the Powder River.<br><br>Streamflow data is not currently monitored at this location.</div>';
+  } else {
+    document.getElementById('stat-cards').innerHTML = '<div class="stat-loading">⏳ Fetching live data…</div>';
+    document.getElementById('hydro-wrap').innerHTML = '<div class="stat-loading">⏳ Loading chart…</div>';
+  }
 
   // ── Fetch USGS live data ──
-  const usgs = await fetchUSGS(r.usgsId);
+  const usgs = r.noGauge ? {} : await fetchUSGS(r.usgsId);
   const stats = [
     { label:'Flow Rate',  value: usgs.flow || '—', unit:'cfs' },
     { label:'Water Temp', value: usgs.temp || '—', unit:'°F'  },
   ];
-  document.getElementById('stat-cards').innerHTML = stats.map(s => `
-    <div class="stat-card">
-      <div class="stat-label">${s.label}</div>
-      <div class="stat-value">${s.value} <span class="stat-unit">${s.unit}</span></div>
-    </div>`).join('') +
-    ``;  // note removed
+  if (!r.noGauge) {
+    document.getElementById('stat-cards').innerHTML = stats.map(s => `
+      <div class="stat-card">
+        <div class="stat-label">${s.label}</div>
+        <div class="stat-value">${s.value} <span class="stat-unit">${s.unit}</span></div>
+      </div>`).join('');
+  }
 
   // ── Fetch NWS 5-day forecast ──
   const periods = await fetchWeather(r.lat, r.lon);
@@ -727,7 +741,8 @@ async function showPanel(name, r) {
   }
 
   // ── USGS chart embed + external links ──
-  const usgsChartSrc = `https://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no=${r.usgsId}&parm_cd=00065&period=7&format=gif_default`;
+  if (r.noGauge) return;
+  const usgsChartSrc = `https://waterdata.usgs.gov/nwisweb/graph?agency_cd=USGS&site_no=${r.usgsId}&parm_cd=00060&period=7&format=gif_default`;
   const usgsPageUrl  = `https://waterdata.usgs.gov/monitoring-location/${r.usgsId}/`;
   const nwrfcUrl     = r.nwrfcId ? `https://www.nwrfc.noaa.gov/station/flowplot/hydroPlot.php?id=${r.nwrfcId}&pe=HG` : null;
 
